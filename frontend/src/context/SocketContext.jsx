@@ -20,7 +20,7 @@ export const SocketProvider = ({ children }) => {
       return;
     }
 
-    const socketUrl = window.location.origin; // In production, Nginx proxies sockets. In dev, Vite proxies it.
+    const socketUrl = import.meta.env.VITE_API_URL || window.location.origin;
     const newSocket = io(socketUrl, {
       auth: { token },
       transports: ['websocket', 'polling']

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { logOut, setCredentials } from './auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: '/api', // Using absolute proxy path, which will be directed to port 5000 in Nginx or Vite configs
+  baseUrl: import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : '/api',
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
     if (token) {
