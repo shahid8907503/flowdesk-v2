@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-darkBg text-slate-100 font-sans antialiased overflow-x-hidden;
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: rgba(24, 24, 27, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-input {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    @apply rounded-lg py-2 px-3 text-sm text-white focus:outline-none focus:border-accentColor/60 transition-colors placeholder:text-slate-600;
+  }
+
+  .glass-button-primary {
+    @apply bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-medium py-2 px-4 rounded-lg shadow-lg hover:shadow-indigo-500/10 transition-all text-sm flex items-center justify-center gap-2;
+  }
+
+  .glass-button-secondary {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    @apply hover:bg-white/10 text-slate-200 font-medium py-2 px-4 rounded-lg transition-colors text-sm flex items-center justify-center gap-2;
+  }
+
+  .kanban-column {
+    background: rgba(24, 24, 27, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    @apply rounded-xl p-4 flex flex-col h-[calc(100vh-220px)] w-[290px] shrink-0;
+  }
+}
