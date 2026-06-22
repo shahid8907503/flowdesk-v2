@@ -6,13 +6,8 @@ let redisClient = null;
 const connectRedis = () => {
   if (redisClient) return redisClient;
 
-  const host = process.env.REDIS_HOST || '127.0.0.1';
-  const port = process.env.REDIS_PORT || 6379;
-  const password = process.env.REDIS_PASSWORD || null;
-
+  const redisUrl = process.env.REDIS_URL;
   const config = {
-    host,
-    port,
     maxRetriesPerRequest: null, // Critical requirement for BullMQ
     retryStrategy: (times) => {
       const delay = Math.min(times * 50, 2000);
@@ -20,12 +15,27 @@ const connectRedis = () => {
     }
   };
 
-  if (password) {
-    config.password = password;
-  }
+  if (redisUrl) {
+    logger.info('Attempting Redis connection using REDIS_URL');
+    redisClient = new Redis(redisUrl, config);
+  } else {
+    const host = process.env.REDIS_HOST || '127.0.0.1';
+    const port = process.env.REDIS_PORT || 6379;
+    const password = process.env.REDIS_PASSWORD || null;
 
-  logger.info(`Attempting Redis connection at ${host}:${port}`);
-  redisClient = new Redis(config);
+    const fullConfig = {
+      ...config,
+      host,
+      port
+    };
+
+    if (password) {
+      fullConfig.password = password;
+    }
+
+    logger.info(`Attempting Redis connection at ${host}:${port}`);
+    redisClient = new Redis(fullConfig);
+  }
 
   redisClient.on('connect', () => {
     logger.info('Successfully connected to Redis instance');
