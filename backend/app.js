@@ -26,8 +26,36 @@ const app = express();
 
 // Security and utility middlewares
 app.use(helmet());
+// Configure CORS allowed origins
+const allowedOrigins = [
+  'https://flowdesk-v2-omega.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3000'
+];
+
+if (process.env.CLIENT_URL) {
+  allowedOrigins.push(...process.env.CLIENT_URL.split(',').map(o => o.trim()));
+}
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(...process.env.FRONTEND_URL.split(',').map(o => o.trim()));
+}
+
+const isOriginAllowed = (origin) => {
+  if (!origin) return true;
+  if (allowedOrigins.includes(origin)) return true;
+  if (origin.endsWith('.vercel.app')) return true;
+  if (allowedOrigins.includes('*')) return true;
+  return false;
+};
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    if (isOriginAllowed(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 app.use(cookieParser());

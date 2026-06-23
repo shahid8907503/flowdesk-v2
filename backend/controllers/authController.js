@@ -70,7 +70,8 @@ const signup = async (req, res, next) => {
     await EmailVerification.create({ userId: user._id, token, expiresAt });
 
     // Send verification email
-    const verificationUrl = `${process.env.CLIENT_URL || process.env.FRONTEND_URL || 'http://localhost:5173'}/verify-email?token=${token}`;
+    const clientUrl = process.env.CLIENT_URL || process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? 'https://flowdesk-v2-omega.vercel.app' : 'http://localhost:5173');
+    const verificationUrl = `${clientUrl}/verify-email?token=${token}`;
     await sendEmail({
       to: user.email,
       subject: 'Verify your FlowDesk Account',
@@ -268,7 +269,8 @@ const forgotPassword = async (req, res, next) => {
     const expiresAt = new Date(Date.now() + 1 * 60 * 60 * 1000); // 1 hour
     await PasswordReset.create({ userId: user._id, token, expiresAt });
 
-    const resetUrl = `${process.env.CLIENT_URL || process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password?token=${token}`;
+    const clientUrl = process.env.CLIENT_URL || process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? 'https://flowdesk-v2-omega.vercel.app' : 'http://localhost:5173');
+    const resetUrl = `${clientUrl}/reset-password?token=${token}`;
     await sendEmail({
       to: user.email,
       subject: 'FlowDesk - Password Reset Request',
