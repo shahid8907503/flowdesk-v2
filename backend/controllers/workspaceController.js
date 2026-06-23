@@ -61,7 +61,7 @@ const getWorkspaces = async (req, res, next) => {
       .map(m => {
         if (!m.workspaceId) return null;
         return {
-          ...m.workspaceId._doc,
+          ...m.workspaceId.toObject(),
           myRole: m.role
         };
       })
@@ -162,7 +162,7 @@ const updateMemberRole = async (req, res, next) => {
 
     // Don't let user demote workspace owner
     const workspace = await Workspace.findById(workspaceId);
-    if (workspace.owner.toString() === memberUserId.toString()) {
+    if (workspace.owner && workspace.owner.toString() === memberUserId.toString()) {
       return res.status(400).json({ success: false, message: 'Cannot change the role of the workspace owner' });
     }
 
@@ -186,7 +186,7 @@ const removeMember = async (req, res, next) => {
     const { workspaceId, memberUserId } = req.params;
 
     const workspace = await Workspace.findById(workspaceId);
-    if (workspace.owner.toString() === memberUserId.toString()) {
+    if (workspace.owner && workspace.owner.toString() === memberUserId.toString()) {
       return res.status(400).json({ success: false, message: 'Cannot remove the workspace owner' });
     }
 
@@ -216,7 +216,7 @@ const deleteWorkspace = async (req, res, next) => {
     }
 
     // Only the workspace owner can delete the workspace
-    if (workspace.owner.toString() !== req.user._id.toString()) {
+    if (!workspace.owner || workspace.owner.toString() !== req.user._id.toString()) {
       return res.status(403).json({ success: false, message: 'Only the workspace owner can delete it' });
     }
 
