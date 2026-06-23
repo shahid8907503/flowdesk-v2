@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { motion } from 'framer-motion';
-import { useGetBoardByIdQuery, useUpdateBoardMutation } from '../features/boards/boardApi';
+import { useGetBoardByIdQuery, useUpdateBoardMutation, useDeleteBoardMutation } from '../features/boards/boardApi';
 import { useCreateCardMutation, useMoveCardMutation } from '../features/cards/cardApi';
 import { useSocket } from '../context/SocketContext';
 import { useGenerateSprintPlan } from '../features/analyticsAndOthersApi';
@@ -20,7 +20,8 @@ import {
   ChevronLeft,
   Settings,
   Sparkles,
-  X
+  X,
+  Trash2
 } from 'lucide-react';
 
 const formatShortDuration = (seconds) => {
@@ -95,9 +96,22 @@ const BoardView = () => {
   const params = useParams();
   const { boardId, workspaceId } = params;
   const { socket, joinBoard, leaveBoard } = useSocket();
+  const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [priorityFilter, setPriorityFilter] = useState('All');
+
+  const [deleteBoard, { isLoading: isDeleting }] = useDeleteBoardMutation();
+
+  const handleDeleteBoard = async () => {
+    if (!window.confirm('Are you sure you want to delete this board? All columns and cards inside will be permanently deleted.')) return;
+    try {
+      await deleteBoard(boardId).unwrap();
+      navigate(`/workspaces/${workspaceId}/dashboard`);
+    } catch (err) {
+      alert(err.data?.message || 'Failed to delete board.');
+    }
+  };
 
   const [activeCardId, setActiveCardId] = useState(null);
   
@@ -373,6 +387,15 @@ const BoardView = () => {
           >
             <Sparkles size={13} />
             AI Plan Sprint
+          </button>
+
+          <button
+            onClick={handleDeleteBoard}
+            disabled={isDeleting}
+            className="flex items-center gap-1.5 text-xs bg-red-600/10 hover:bg-red-600/20 text-red-400 hover:text-red-300 border border-red-500/20 rounded-lg py-1.5 px-3 font-bold transition-all cursor-pointer shrink-0"
+          >
+            {isDeleting ? <Loader2 className="animate-spin" size={13} /> : <Trash2 size={13} />}
+            Delete Board
           </button>
         </div>
       </div>

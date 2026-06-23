@@ -5,7 +5,8 @@ import {
   useStartTimerMutation,
   useStopTimerMutation,
   useAddCommentMutation,
-  useAddAttachmentMutation
+  useAddAttachmentMutation,
+  useDeleteCardMutation
 } from '../features/cards/cardApi';
 import { useGetMembersQuery } from '../features/workspaces/workspaceApi';
 import { useSocket } from '../context/SocketContext';
@@ -23,7 +24,8 @@ import {
   AlertCircle,
   Plus,
   Loader2,
-  Sparkles
+  Sparkles,
+  Trash2
 } from 'lucide-react';
 
 const CardDetailModal = ({ cardId, boardId, onClose, typingUsers = [] }) => {
@@ -44,11 +46,22 @@ const CardDetailModal = ({ cardId, boardId, onClose, typingUsers = [] }) => {
   const [stopTimer] = useStopTimerMutation();
   const [addComment] = useAddCommentMutation();
   const [addAttachment] = useAddAttachmentMutation();
+  const [deleteCard, { isLoading: isDeleting }] = useDeleteCardMutation();
   const [generateSubtasks, { isLoading: aiGenerating }] = useGenerateSubtasks();
 
   const [desc, setDesc] = useState('');
   const [commentText, setCommentText] = useState('');
   const [isEditingDesc, setIsEditingDesc] = useState(false);
+
+  const handleDeleteCard = async () => {
+    if (!window.confirm('Are you sure you want to delete this task card? This action cannot be undone.')) return;
+    try {
+      await deleteCard(cardId).unwrap();
+      onClose();
+    } catch (err) {
+      alert(err.data?.message || 'Failed to delete card.');
+    }
+  };
 
   // Attachment inputs
   // File upload state
@@ -510,6 +523,25 @@ const CardDetailModal = ({ cardId, boardId, onClose, typingUsers = [] }) => {
                 ))}
               </div>
             </div>
+
+            {/* Delete Card Button */}
+            <button
+              onClick={handleDeleteCard}
+              disabled={isDeleting}
+              className="w-full flex items-center justify-center gap-2 p-3 bg-red-600/10 hover:bg-red-600/20 border border-red-500/20 text-red-400 hover:text-red-300 rounded-xl transition-all text-xs font-semibold cursor-pointer"
+            >
+              {isDeleting ? (
+                <>
+                  <Loader2 className="animate-spin text-red-400" size={13} />
+                  Deleting Task...
+                </>
+              ) : (
+                <>
+                  <Trash2 size={13} />
+                  Delete Task
+                </>
+              )}
+            </button>
           </div>
 
         </div>
