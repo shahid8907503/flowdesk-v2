@@ -32,13 +32,13 @@ const initSocket = (server) => {
     'https://flowdesk-v2-omega.vercel.app',
     'http://localhost:5173',
     'http://localhost:3000'
-  ];
+  ].map(url => url.replace(/\/$/, ''));
 
   if (process.env.CLIENT_URL) {
-    allowedOrigins.push(...process.env.CLIENT_URL.split(',').map(o => o.trim()));
+    allowedOrigins.push(...process.env.CLIENT_URL.split(',').map(o => o.trim().replace(/\/$/, '')));
   }
   if (process.env.FRONTEND_URL) {
-    allowedOrigins.push(...process.env.FRONTEND_URL.split(',').map(o => o.trim()));
+    allowedOrigins.push(...process.env.FRONTEND_URL.split(',').map(o => o.trim().replace(/\/$/, '')));
   }
 
   const isOriginAllowed = (origin) => {
