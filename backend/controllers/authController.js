@@ -9,6 +9,7 @@ const DeviceSession = require('../models/DeviceSession');
 const { sendEmail } = require('../config/mailer');
 const { logAction } = require('../services/auditService');
 const { signupSchema, loginSchema, verifyOtpSchema } = require('../utils/validators');
+const logger = require('../config/logger');
 
 const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || 'access_secret_123';
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'refresh_secret_123';
