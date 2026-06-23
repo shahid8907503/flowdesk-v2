@@ -5,7 +5,8 @@ const {
   inviteMember,
   getMembers,
   updateMemberRole,
-  removeMember
+  removeMember,
+  deleteWorkspace
 } = require('../controllers/workspaceController');
 const { protect } = require('../middleware/auth');
 const { checkRole } = require('../middleware/rbac');
@@ -22,5 +23,6 @@ router.post('/:workspaceId/invite', checkRole(['Super Admin', 'Workspace Admin']
 router.get('/:workspaceId/members', checkRole(['Super Admin', 'Workspace Admin', 'Editor', 'Viewer']), getMembers);
 router.put('/:workspaceId/members/:memberUserId', checkRole(['Super Admin', 'Workspace Admin']), updateMemberRole);
 router.delete('/:workspaceId/members/:memberUserId', checkRole(['Super Admin', 'Workspace Admin']), removeMember);
+router.delete('/:workspaceId', deleteWorkspace);
 
 module.exports = router;

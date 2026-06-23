@@ -41,6 +41,13 @@ export const workspaceApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Workspace'],
     }),
+    deleteWorkspace: builder.mutation({
+      query: (workspaceId) => ({
+        url: `/workspaces/${workspaceId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Workspace'],
+    }),
   }),
 });
 
@@ -51,4 +58,5 @@ export const {
   useInviteMemberMutation,
   useUpdateMemberRoleMutation,
   useRemoveMemberMutation,
+  useDeleteWorkspaceMutation,
 } = workspaceApi;

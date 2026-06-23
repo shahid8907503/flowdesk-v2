@@ -1,6 +1,12 @@
 const Workspace = require('../models/Workspace');
 const WorkspaceMember = require('../models/WorkspaceMember');
 const User = require('../models/User');
+const Board = require('../models/Board');
+const Column = require('../models/Column');
+const Card = require('../models/Card');
+const TimeLog = require('../models/TimeLog');
+const Comment = require('../models/Comment');
+const Attachment = require('../models/Attachment');
 const { logAction } = require('../services/auditService');
 const { workspaceSchema } = require('../utils/validators');
 
@@ -200,11 +206,59 @@ const removeMember = async (req, res, next) => {
   }
 };
 
+const deleteWorkspace = async (req, res, next) => {
+  try {
+    const { workspaceId } = req.params;
+
+    const workspace = await Workspace.findById(workspaceId);
+    if (!workspace) {
+      return res.status(404).json({ success: false, message: 'Workspace not found' });
+    }
+
+    // Only the workspace owner can delete the workspace
+    if (workspace.owner.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ success: false, message: 'Only the workspace owner can delete it' });
+    }
+
+    // 1. Find all boards in this workspace
+    const boards = await Board.find({ workspaceId });
+    const boardIds = boards.map(b => b._id);
+
+    // 2. Find columns in these boards
+    const columns = await Column.find({ boardId: { $in: boardIds } });
+    const columnIds = columns.map(c => c._id);
+
+    // 3. Find cards in these columns
+    const cards = await Card.find({ columnId: { $in: columnIds } });
+    const cardIds = cards.map(c => c._id);
+
+    // Cascading deletes
+    await Workspace.deleteOne({ _id: workspaceId });
+    await WorkspaceMember.deleteMany({ workspaceId });
+    await Board.deleteMany({ workspaceId });
+    await Column.deleteMany({ boardId: { $in: boardIds } });
+    await Card.deleteMany({ columnId: { $in: columnIds } });
+    await TimeLog.deleteMany({ cardId: { $in: cardIds } });
+    await Comment.deleteMany({ cardId: { $in: cardIds } });
+    await Attachment.deleteMany({ cardId: { $in: cardIds } });
+
+    await logAction(req.user._id, 'workspace.delete', req, { workspaceId, name: workspace.name });
+
+    res.status(200).json({
+      success: true,
+      message: 'Workspace and all its associated data deleted successfully'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createWorkspace,
   getWorkspaces,
   inviteMember,
   getMembers,
   updateMemberRole,
-  removeMember
+  removeMember,
+  deleteWorkspace
 };
