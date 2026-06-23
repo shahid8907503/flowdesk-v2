@@ -265,6 +265,9 @@ const forgotPassword = async (req, res, next) => {
       return res.status(200).json({ success: true, message: 'If an account exists, a reset link has been sent.' });
     }
 
+    // Delete any existing password reset requests for this user to avoid duplicate key errors
+    await PasswordReset.deleteMany({ userId: user._id });
+
     const token = crypto.randomBytes(32).toString('hex');
     const expiresAt = new Date(Date.now() + 1 * 60 * 60 * 1000); // 1 hour
     await PasswordReset.create({ userId: user._id, token, expiresAt });
