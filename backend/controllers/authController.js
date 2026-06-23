@@ -72,16 +72,20 @@ const signup = async (req, res, next) => {
     // Send verification email
     const clientUrl = process.env.CLIENT_URL || process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? 'https://flowdesk-v2-omega.vercel.app' : 'http://localhost:5173');
     const verificationUrl = `${clientUrl}/verify-email?token=${token}`;
-    await sendEmail({
-      to: user.email,
-      subject: 'Verify your FlowDesk Account',
-      html: `
-        <h2>Welcome to FlowDesk!</h2>
-        <p>Please verify your email address by clicking the link below:</p>
-        <a href="${verificationUrl}" style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email</a>
-        <p>This link expires in 24 hours.</p>
-      `
-    });
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: 'Verify your FlowDesk Account',
+        html: `
+          <h2>Welcome to FlowDesk!</h2>
+          <p>Please verify your email address by clicking the link below:</p>
+          <a href="${verificationUrl}" style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email</a>
+          <p>This link expires in 24 hours.</p>
+        `
+      });
+    } catch (mailError) {
+      logger.warn(`Failed to send verification email to ${user.email} (link logged in console): ${mailError.message}`);
+    }
 
     await logAction(user._id, 'auth.signup', req, { email: user.email });
 
@@ -121,16 +125,20 @@ const login = async (req, res, next) => {
       await user.save();
 
       // Send 2FA email
-      await sendEmail({
-        to: user.email,
-        subject: 'FlowDesk - Two-Factor Authentication OTP',
-        html: `
-          <h2>Security Verification</h2>
-          <p>You have two-factor authentication enabled. Please use the following One-Time Password (OTP) to complete your login:</p>
-          <div style="font-size: 32px; font-weight: bold; background-color: #1e1e24; padding: 15px; text-align: center; border-radius: 8px; color: #818cf8; letter-spacing: 5px;">${otp}</div>
-          <p>This OTP is valid for 10 minutes.</p>
-        `
-      });
+      try {
+        await sendEmail({
+          to: user.email,
+          subject: 'FlowDesk - Two-Factor Authentication OTP',
+          html: `
+            <h2>Security Verification</h2>
+            <p>You have two-factor authentication enabled. Please use the following One-Time Password (OTP) to complete your login:</p>
+            <div style="font-size: 32px; font-weight: bold; background-color: #1e1e24; padding: 15px; text-align: center; border-radius: 8px; color: #818cf8; letter-spacing: 5px;">${otp}</div>
+            <p>This OTP is valid for 10 minutes.</p>
+          `
+        });
+      } catch (mailError) {
+        logger.warn(`Failed to send 2FA OTP email to ${user.email} (OTP logged in console): ${mailError.message}`);
+      }
 
       return res.status(200).json({
         success: true,
@@ -274,16 +282,20 @@ const forgotPassword = async (req, res, next) => {
 
     const clientUrl = process.env.CLIENT_URL || process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? 'https://flowdesk-v2-omega.vercel.app' : 'http://localhost:5173');
     const resetUrl = `${clientUrl}/reset-password?token=${token}`;
-    await sendEmail({
-      to: user.email,
-      subject: 'FlowDesk - Password Reset Request',
-      html: `
-        <h2>Password Reset</h2>
-        <p>We received a request to reset your password. Click the link below to set a new password:</p>
-        <a href="${resetUrl}" style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Reset Password</a>
-        <p>If you didn't request this, you can ignore this email. This link expires in 1 hour.</p>
-      `
-    });
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: 'FlowDesk - Password Reset Request',
+        html: `
+          <h2>Password Reset</h2>
+          <p>We received a request to reset your password. Click the link below to set a new password:</p>
+          <a href="${resetUrl}" style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Reset Password</a>
+          <p>If you didn't request this, you can ignore this email. This link expires in 1 hour.</p>
+        `
+      });
+    } catch (mailError) {
+      logger.warn(`Failed to send password reset email to ${user.email} (link logged in console): ${mailError.message}`);
+    }
 
     res.status(200).json({
       success: true,
