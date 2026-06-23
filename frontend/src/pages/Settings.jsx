@@ -47,7 +47,7 @@ const Settings = () => {
 
   const workspaces = wsData?.workspaces || [];
   const activeWs = workspaces.find(w => w._id === workspaceId);
-  const isOwner = activeWs?.owner?._id === user?._id || activeWs?.owner === user?._id;
+  const isOwner = activeWs?.owner?._id === user?.id || activeWs?.owner?._id === user?._id || activeWs?.owner === user?.id || activeWs?.owner === user?._id;
 
   // Device sessions API
   const { data: sessionsData, isLoading: sessionsLoading, error: sessionsError } = useGetSessionsQuery();
