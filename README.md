@@ -140,7 +140,24 @@ Tests are written with **Jest** and **Supertest**:
 
 ---
 
-## 8. Portfolio & Resume Summaries
+## 8. Recent Feature Additions
+
+FlowDesk has been recently updated with several advanced operations and platform integrations:
+
+1. **Workspace Cascading Deletion**: 
+   - **Backend**: Implemented `deleteWorkspace` in the [workspaceController.js](file:///c:/Users/Syeds/Desktop/mern3/backend/controllers/workspaceController.js) that checks permissions (restricting deletion to the workspace owner), and cascades the deletion to remove all associated `Board`, `Column`, `Card`, `TimeLog`, `Comment`, and `Attachment` documents, and logs the action in the security audit trail.
+   - **Frontend UI**: Integrated a **Delete Workspace** option directly in the workspace [Settings.jsx](file:///c:/Users/Syeds/Desktop/mern3/frontend/src/pages/Settings.jsx) page with confirmation modals and loading indicators.
+2. **Interactive Board & Task Deletion**: 
+   - **Delete Board**: Added a button on the [BoardView.jsx](file:///c:/Users/Syeds/Desktop/mern3/frontend/src/pages/BoardView.jsx) dashboard allowing administrators to permanently delete current boards and nested columns/cards.
+   - **Delete Task**: Integrated a **Delete Task** button inside the [CardDetailModal.jsx](file:///c:/Users/Syeds/Desktop/mern3/frontend/src/components/CardDetailModal.jsx) component to allow editors to clean up task cards easily.
+3. **Resend HTTP API Email Support**: 
+   - Implemented an alternative email dispatch pathway in [mailer.js](file:///c:/Users/Syeds/Desktop/mern3/backend/config/mailer.js). If `RESEND_API_KEY` is present in the environment variables, the system bypasses standard Nodemailer SMTP setup and transmits transactional/2FA emails via the high-deliverability Resend HTTP API.
+4. **Vercel Routing Rewrite Rules**:
+   - Added a `vercel.json` SPA configuration inside the `frontend/` directory mapping wildcard rewrites back to `/index.html`, ensuring seamless browser reloads on single-page routing structures deployed to Vercel.
+
+---
+
+## 9. Portfolio & Resume Summaries
 
 ### GitHub Repository Description
 > "FlowDesk is a production-ready, JavaScript-only (MERN Stack) Kanban SaaS. Features real-time Socket.IO collaboration, drag-and-drop boards, automatic sprint burndown analytics, atomic card time-tracking, role-based access control (RBAC), multi-factor email 2FA, transactional bulk-move rollbacks, webhooks, and security audit logging."

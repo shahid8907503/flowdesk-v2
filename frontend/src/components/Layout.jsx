@@ -202,11 +202,15 @@ const Layout = ({ children }) => {
   const NavigationContent = () => (
     <div className="flex flex-col h-full py-6 px-4">
       {/* Logo */}
-      <div className="flex items-center gap-3 px-2 mb-8">
-        <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/25">
-          <span className="font-extrabold text-white text-lg">F</span>
-        </div>
-        <span className="font-bold text-xl tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">FlowDesk</span>
+      <div className="flex items-center gap-2 px-2 mb-8">
+        <svg className="h-5 w-5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="3" width="4" height="18" rx="1" />
+          <rect x="10" y="3" width="4" height="12" rx="1" />
+          <rect x="17" y="3" width="4" height="15" rx="1" />
+        </svg>
+        <span className="font-semibold text-lg tracking-tight text-white">
+          Flow<span className="text-slate-400 font-light">Desk</span>
+        </span>
       </div>
 
       {/* Workspace Selector */}

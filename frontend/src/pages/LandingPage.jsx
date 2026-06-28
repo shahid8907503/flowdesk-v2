@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -23,6 +23,74 @@ const LandingPage = () => {
     { id: 'c3', title: 'Write Supertest transactions', col: 'review', priority: 'Medium', points: 1 },
     { id: 'c4', title: 'Build interactive dashboards', col: 'done', priority: 'Low', points: 2 }
   ]);
+
+  const [activeFeature, setActiveFeature] = useState('sockets');
+  const [isTimerRunning, setIsTimerRunning] = useState(true);
+  const [timerSeconds, setTimerSeconds] = useState(6322);
+
+  useEffect(() => {
+    let interval = null;
+    if (isTimerRunning) {
+      interval = setInterval(() => {
+        setTimerSeconds(prev => prev + 1);
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isTimerRunning]);
+
+  const formatSeconds = (totalSeconds) => {
+    const hrs = Math.floor(totalSeconds / 3600).toString().padStart(2, '0');
+    const mins = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, '0');
+    const secs = (totalSeconds % 60).toString().padStart(2, '0');
+    return `${hrs}:${mins}:${secs}`;
+  };
+
+  const features = [
+    {
+      id: 'sockets',
+      title: 'Live Sockets Collaboration',
+      description: 'Experience instant live collaboration. Tasks, comments, and members presence update immediately across all boards without manual reloads.',
+      icon: Zap,
+      badge: 'Real-time'
+    },
+    {
+      id: 'tracker',
+      title: 'Integrated Time Tracker',
+      description: 'Track times directly inside your cards. Pause, play, and end session logs, then watch hours auto-aggregate into team velocity metrics.',
+      icon: Clock,
+      badge: 'Productivity'
+    },
+    {
+      id: 'analytics',
+      title: 'Burn-down Analytics',
+      description: 'Evaluate project timelines using advanced Recharts components. Track remaining story points, team velocity, and historic sprint progression.',
+      icon: TrendingUp,
+      badge: 'Metrics'
+    },
+    {
+      id: 'auth',
+      title: 'Enterprise Auth & 2FA',
+      description: 'Secure workspaces with argon2 hashing, JWT refresh token rotation cookies, and full email-based 2FA OTP codes.',
+      icon: ShieldCheck,
+      badge: 'Security'
+    },
+    {
+      id: 'webhooks',
+      title: 'Outgoing Webhooks',
+      description: 'Connect external services. Dispatch payloads to external hooks when cards enter "Done" with robust HMAC payload verification.',
+      icon: Layers,
+      badge: 'Integrations'
+    },
+    {
+      id: 'audit',
+      title: 'Complete Audit Logs',
+      description: 'Keep records of every card create, column transfer, configuration change, and member invitation in detailed audit logs.',
+      icon: FileText,
+      badge: 'Compliance'
+    }
+  ];
 
   const moveDemoCard = (id) => {
     setDemoCards(prev => prev.map(c => {
@@ -61,11 +129,15 @@ const LandingPage = () => {
 
       {/* Top Navbar */}
       <header className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between z-20 relative">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-            <span className="font-black text-white text-xl">F</span>
-          </div>
-          <span className="font-extrabold text-2xl tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">FlowDesk</span>
+        <div className="flex items-center gap-2">
+          <svg className="h-6 w-6 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="3" width="4" height="18" rx="1" />
+            <rect x="10" y="3" width="4" height="12" rx="1" />
+            <rect x="17" y="3" width="4" height="15" rx="1" />
+          </svg>
+          <span className="font-semibold text-xl tracking-tight text-white">
+            Flow<span className="text-slate-400 font-light">Desk</span>
+          </span>
         </div>
 
         <div className="flex items-center gap-6">
@@ -82,37 +154,37 @@ const LandingPage = () => {
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-6 pt-20 pb-16 text-center relative z-10 flex flex-col items-center">
         {/* Release Pill */}
-        <motion.div 
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-indigo-400 font-semibold mb-8 hover:bg-white/10 transition-colors cursor-pointer"
-        >
-          <span className="flex items-center gap-1.5"><Sparkles size={11} /> FlowDesk v1.0 is now live</span>
-          <ChevronRight size={12} />
-        </motion.div>
+        <Link to="/signup">
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-indigo-400 font-semibold mb-8 hover:bg-white/10 transition-colors cursor-pointer"
+          >
+            <span className="flex items-center gap-1.5"><Sparkles size={11} /> FlowDesk v1.0 is now live</span>
+            <ChevronRight size={12} />
+          </motion.div>
+        </Link>
 
         {/* Master Headline */}
         <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-5xl md:text-8xl font-black tracking-tight max-w-5xl leading-[1.05] mb-6"
+          className="text-4xl md:text-7xl font-bold tracking-tight text-white max-w-4xl leading-[1.1] mb-6"
         >
-          Manage Projects at the <br/>
-          <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-violet-500 bg-clip-text text-transparent">
-            Speed of Thought.
-          </span>
+          The collaborative project platform <br className="hidden md:inline" />
+          <span className="text-slate-400 font-light">built for engineering teams.</span>
         </motion.h1>
 
         {/* Description */}
         <motion.p 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-lg md:text-xl text-slate-400 max-w-3xl mb-12 leading-relaxed font-normal"
+          className="text-base md:text-lg text-slate-400 max-w-2xl mb-12 leading-relaxed font-normal"
         >
-          FlowDesk combines drag-and-drop Kanban, atomic time tracking, real-time collaboration, and executive-grade sprint metrics into a unified dark-first SaaS workspace.
+          FlowDesk integrates real-time Kanban boards, precise developer time-tracking, and sprint analytics into a fast, unified command center for technical projects.
         </motion.p>
 
         {/* Feature List Row */}
@@ -293,91 +365,249 @@ const LandingPage = () => {
         </motion.div>
       </section>
 
-      {/* Feature Grid */}
+      {/* Interactive Feature Showcase */}
       <section className="max-w-7xl mx-auto px-6 py-24 border-t border-white/5 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-black mb-4">Equipped for High-Velocity Teams</h2>
-          <p className="text-slate-400 max-w-xl mx-auto">FlowDesk packs every essential SaaS developer feature into a single unified dark glassmorphism system.</p>
+          <span className="text-xs font-bold uppercase tracking-widest text-indigo-400">Platform Core</span>
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Equipped for High-Velocity Teams</h2>
+          <p className="text-slate-400 max-w-xl mx-auto">Explore the enterprise architecture built directly into FlowDesk.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <motion.div 
-            whileHover={{ scale: 1.02, translateY: -2 }}
-            className="glass-card p-8 rounded-2xl border border-white/5"
-          >
-            <div className="h-12 w-12 rounded-xl bg-indigo-500/15 flex items-center justify-center text-indigo-400 mb-6 border border-indigo-500/20">
-              <Zap size={22} />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Live Sockets Collaboration</h3>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              Experience instant live collaboration. Tasks, comments, and members presence update immediately across all boards without manual reloads.
-            </p>
-          </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          {/* Tabs Navigation (Left) */}
+          <div className="lg:col-span-5 flex flex-col gap-3">
+            {features.map((feat) => {
+              const Icon = feat.icon;
+              const isActive = activeFeature === feat.id;
+              return (
+                <button
+                  key={feat.id}
+                  onClick={() => setActiveFeature(feat.id)}
+                  className={`text-left p-5 rounded-xl border transition-all duration-200 cursor-pointer flex items-start gap-4 ${
+                    isActive
+                      ? 'bg-indigo-600/10 border-indigo-500/30 text-white shadow-lg'
+                      : 'bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/[0.03] hover:border-white/10 hover:text-slate-200'
+                  }`}
+                >
+                  <div className={`p-2 rounded-lg border ${
+                    isActive ? 'bg-indigo-500/20 border-indigo-500/30 text-indigo-400' : 'bg-white/5 border-white/5 text-slate-400'
+                  }`}>
+                    <Icon size={20} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <span className="font-semibold text-sm">{feat.title}</span>
+                      {feat.badge && (
+                        <span className={`text-[9px] px-2 py-0.5 rounded font-mono ${
+                          isActive ? 'bg-indigo-500/20 text-indigo-300' : 'bg-white/5 text-slate-500'
+                        }`}>
+                          {feat.badge}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-slate-500 leading-normal line-clamp-2">{feat.description}</p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
 
-          <motion.div 
-            whileHover={{ scale: 1.02, translateY: -2 }}
-            className="glass-card p-8 rounded-2xl border border-white/5"
-          >
-            <div className="h-12 w-12 rounded-xl bg-violet-500/15 flex items-center justify-center text-violet-400 mb-6 border border-violet-500/20">
-              <Clock size={22} />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Integrated Time Tracker</h3>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              Track times directly inside your cards. Pause, play, and end session logs, then watch hours auto-aggregate into team velocity metrics.
-            </p>
-          </motion.div>
+          {/* Interactive Screen Preview Showcase (Right) */}
+          <div className="lg:col-span-7 flex flex-col justify-between">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeFeature}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="h-full"
+              >
+                {activeFeature === 'sockets' && (
+                  <div className="bg-[#161420]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
+                    <div>
+                      <span className="text-[10px] uppercase tracking-wider text-indigo-400 font-semibold mb-3 block font-mono">Socket.IO Event Stream</span>
+                      <h4 className="text-lg font-bold text-white mb-4">Active Board Room Updates</h4>
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-lg">
+                          <div className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span className="text-xs font-medium text-slate-200">Sarah Chen</span>
+                          </div>
+                          <span className="text-[10px] text-slate-500 font-mono">room: workspace_1</span>
+                        </div>
+                        <div className="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-lg">
+                          <div className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-indigo-500"></span>
+                            <span className="text-xs font-medium text-slate-200">Marcus Harris</span>
+                          </div>
+                          <span className="text-[10px] text-slate-500 font-mono">card_move: card_84 &rarr; Done</span>
+                        </div>
+                        <div className="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-lg">
+                          <div className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-amber-500"></span>
+                            <span className="text-xs font-medium text-slate-200">Alex Rodriguez</span>
+                          </div>
+                          <span className="text-[10px] text-slate-500 font-mono">timer_start: card_11</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-[10px] text-slate-500 font-mono border-t border-white/5 pt-4 mt-6">
+                      {`io.to("board:sprint_3").emit("board_change", { action: "card_move" });`}
+                    </div>
+                  </div>
+                )}
 
-          <motion.div 
-            whileHover={{ scale: 1.02, translateY: -2 }}
-            className="glass-card p-8 rounded-2xl border border-white/5"
-          >
-            <div className="h-12 w-12 rounded-xl bg-indigo-500/15 flex items-center justify-center text-indigo-400 mb-6 border border-indigo-500/20">
-              <TrendingUp size={22} />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Burn-down Analytics</h3>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              Evaluate project timelines using advanced Recharts components. Track remaining story points, team velocity, and historic sprint progression.
-            </p>
-          </motion.div>
+                {activeFeature === 'tracker' && (
+                  <div className="bg-[#161420]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
+                    <div>
+                      <span className="text-[10px] uppercase tracking-wider text-violet-400 font-semibold mb-3 block font-mono">Task Session Timer</span>
+                      <h4 className="text-lg font-bold text-white mb-4">Integrated Developer Stopwatch</h4>
+                      <div className="bg-black/25 border border-white/5 rounded-xl p-6 text-center max-w-sm mx-auto">
+                        <p className="text-[10px] text-slate-500 mb-2 uppercase tracking-widest font-mono">Active Time Logged</p>
+                        <p className="text-4xl font-mono font-semibold text-white tracking-wider mb-4">
+                          {formatSeconds(timerSeconds)}
+                        </p>
+                        <button 
+                          onClick={() => setIsTimerRunning(!isTimerRunning)}
+                          className={`px-4 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
+                            isTimerRunning 
+                              ? 'bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20' 
+                              : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20'
+                          }`}
+                        >
+                          {isTimerRunning ? 'Pause Session' : 'Resume Session'}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="text-[10px] text-slate-500 leading-normal border-t border-white/5 pt-4 mt-6">
+                      Accumulated time logs are pushed to MongoDB session transactions for high accuracy velocity calculations.
+                    </div>
+                  </div>
+                )}
 
-          <motion.div 
-            whileHover={{ scale: 1.02, translateY: -2 }}
-            className="glass-card p-8 rounded-2xl border border-white/5"
-          >
-            <div className="h-12 w-12 rounded-xl bg-emerald-500/15 flex items-center justify-center text-emerald-400 mb-6 border border-emerald-500/20">
-              <ShieldCheck size={22} />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Enterprise Auth & 2FA</h3>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              Secure workspaces with argon2 hashing, JWT refresh token rotation cookies, and full email-based 2FA OTP codes.
-            </p>
-          </motion.div>
+                {activeFeature === 'analytics' && (
+                  <div className="bg-[#161420]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
+                    <div>
+                      <span className="text-[10px] uppercase tracking-wider text-indigo-400 font-semibold mb-3 block font-mono">Burndown Metrics</span>
+                      <h4 className="text-lg font-bold text-white mb-4">Sprint Story Points Velocity</h4>
+                      <div className="h-32 w-full flex items-end justify-between gap-1 pt-4 px-2 bg-black/25 border border-white/5 rounded-xl">
+                        <svg className="w-full h-full text-indigo-500" viewBox="0 0 100 50" preserveAspectRatio="none">
+                          <line x1="0" y1="5" x2="100" y2="45" stroke="#475569" strokeWidth="1" strokeDasharray="3,3" />
+                          <path d="M 0 5 L 20 15 L 40 18 L 60 30 L 80 32 L 100 45" fill="none" stroke="#6366f1" strokeWidth="2" />
+                        </svg>
+                      </div>
+                      <div className="flex justify-between items-center text-[10px] text-slate-500 mt-2 px-1">
+                        <span>Day 1</span>
+                        <span>Day 5</span>
+                        <span>Day 10 (Sprint End)</span>
+                      </div>
+                    </div>
+                    <div className="text-[10px] text-slate-500 border-t border-white/5 pt-4 mt-6 flex justify-between items-center">
+                      <span>Current Velocity: 34 pts / sprint</span>
+                      <span className="text-emerald-400 font-bold">On Schedule</span>
+                    </div>
+                  </div>
+                )}
 
-          <motion.div 
-            whileHover={{ scale: 1.02, translateY: -2 }}
-            className="glass-card p-8 rounded-2xl border border-white/5"
-          >
-            <div className="h-12 w-12 rounded-xl bg-amber-500/15 flex items-center justify-center text-amber-400 mb-6 border border-amber-500/20">
-              <Layers size={22} />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Outgoing Webhooks</h3>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              Connect external services. Dispatch payloads to external hooks when cards enter "Done" with robust HMAC payload verification.
-            </p>
-          </motion.div>
+                {activeFeature === 'auth' && (
+                  <div className="bg-[#161420]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
+                    <div>
+                      <span className="text-[10px] uppercase tracking-wider text-emerald-400 font-semibold mb-3 block font-mono">Security Center</span>
+                      <h4 className="text-lg font-bold text-white mb-4">Multi-Factor Authentication</h4>
+                      <div className="bg-black/25 border border-white/5 rounded-xl p-4 flex flex-col items-center max-w-sm mx-auto">
+                        <p className="text-[10px] text-slate-400 text-center mb-3">Verification required: Enter the 6-digit OTP code sent to your email.</p>
+                        <div className="flex gap-2 mb-4">
+                          {['8', '9', '0', '7', '', ''].map((val, idx) => (
+                            <input 
+                              key={idx} 
+                              type="text" 
+                              value={val} 
+                              disabled 
+                              className={`w-8 h-10 border rounded-lg text-center font-mono text-sm font-semibold ${
+                                val ? 'border-indigo-500 text-indigo-400 bg-indigo-500/5' : 'border-white/10 bg-white/5 text-slate-500'
+                              }`} 
+                            />
+                          ))}
+                        </div>
+                        <button className="w-full py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition-colors cursor-pointer">
+                          Verify Code
+                        </button>
+                      </div>
+                    </div>
+                    <div className="text-[10px] text-slate-500 border-t border-white/5 pt-4 mt-6">
+                      Argon2id hashing security combined with rotate-on-use JWT access and refresh cookies.
+                    </div>
+                  </div>
+                )}
 
-          <motion.div 
-            whileHover={{ scale: 1.02, translateY: -2 }}
-            className="glass-card p-8 rounded-2xl border border-white/5"
-          >
-            <div className="h-12 w-12 rounded-xl bg-indigo-500/15 flex items-center justify-center text-indigo-400 mb-6 border border-indigo-500/20">
-              <FileText size={22} />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Complete Audit Logs</h3>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              Keep records of every card create, column transfer, configuration change, and member invitation in detailed audit logs.
-            </p>
-          </motion.div>
+                {activeFeature === 'webhooks' && (
+                  <div className="bg-[#161420]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
+                    <div>
+                      <span className="text-[10px] uppercase tracking-wider text-amber-400 font-semibold mb-3 block font-mono">Outgoing Integrations</span>
+                      <h4 className="text-lg font-bold text-white mb-4">JSON Webhook Payloads</h4>
+                      <div className="bg-black/40 border border-white/5 rounded-xl p-4 font-mono text-[10px] text-slate-300 leading-normal overflow-x-auto">
+                        <p className="text-slate-500">// Header: x-flowdesk-signature-256</p>
+                        <pre>{`{
+  "event": "card.completed",
+  "timestamp": "${new Date().toISOString()}",
+  "data": {
+    "cardId": "card_982b1c",
+    "title": "Configure webhooks",
+    "assignee": "Sarah Chen",
+    "points": 3
+  }
+}`}</pre>
+                      </div>
+                    </div>
+                    <div className="text-[10px] text-slate-500 border-t border-white/5 pt-4 mt-6">
+                      Robust HMAC SHA-256 payloads dispatched to custom API endpoints upon task completion.
+                    </div>
+                  </div>
+                )}
+
+                {activeFeature === 'audit' && (
+                  <div className="bg-[#161420]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
+                    <div>
+                      <span className="text-[10px] uppercase tracking-wider text-indigo-400 font-semibold mb-3 block font-mono">Compliance Trails</span>
+                      <h4 className="text-lg font-bold text-white mb-4">Immutable Audit Logs</h4>
+                      <div className="overflow-hidden border border-white/5 rounded-lg text-left text-xs bg-black/25">
+                        <table className="w-full text-[10px] text-slate-400">
+                          <thead>
+                            <tr className="border-b border-white/5 bg-white/5 text-slate-300">
+                              <th className="p-2">Event</th>
+                              <th className="p-2">Actor</th>
+                              <th className="p-2">IP Address</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="border-b border-white/5">
+                              <td className="p-2 font-mono text-indigo-400">workspace.delete_request</td>
+                              <td className="p-2">Sarah C.</td>
+                              <td className="p-2">192.168.1.42</td>
+                            </tr>
+                            <tr className="border-b border-white/5">
+                              <td className="p-2 font-mono text-violet-400">mfa.enabled</td>
+                              <td className="p-2">Marcus H.</td>
+                              <td className="p-2">203.0.113.12</td>
+                            </tr>
+                            <tr>
+                              <td className="p-2 font-mono text-amber-400">webhook.created</td>
+                              <td className="p-2">Alex R.</td>
+                              <td className="p-2">198.51.100.7</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div className="text-[10px] text-slate-500 border-t border-white/5 pt-4 mt-6">
+                      Ensures SOC 2 compliance readiness with fully traceable historical modifications logs.
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </section>
 
@@ -508,11 +738,62 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="max-w-7xl mx-auto px-6 py-12 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-600 relative z-10">
-        <p>&copy; {new Date().getFullYear()} FlowDesk SaaS. All rights reserved. Created in JavaScript only.</p>
-        <div className="flex gap-4">
-          <Link to="/login" className="hover:underline">Terms of Service</Link>
-          <Link to="/signup" className="hover:underline">Privacy Policy</Link>
+      <footer className="max-w-7xl mx-auto px-6 pt-24 pb-12 border-t border-white/5 relative z-10 text-xs text-slate-500">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-16">
+          {/* Brand Column */}
+          <div className="col-span-2 flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <svg className="h-5 w-5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="4" height="18" rx="1" />
+                <rect x="10" y="3" width="4" height="12" rx="1" />
+                <rect x="17" y="3" width="4" height="15" rx="1" />
+              </svg>
+              <span className="font-semibold text-lg tracking-tight text-white">
+                Flow<span className="text-slate-400 font-light">Desk</span>
+              </span>
+            </div>
+            <p className="text-slate-400 max-w-sm leading-relaxed">
+              Enterprise-grade SaaS Kanban and real-time collaboration workspace built for engineering squads.
+            </p>
+          </div>
+
+          {/* Product Links */}
+          <div>
+            <h4 className="font-bold text-white mb-4 uppercase tracking-wider text-[10px]">Product</h4>
+            <ul className="space-y-2">
+              <li><Link to="/login" className="hover:text-white transition-colors">Kanban Boards</Link></li>
+              <li><Link to="/signup" className="hover:text-white transition-colors">Time Tracking</Link></li>
+              <li><Link to="/signup" className="hover:text-white transition-colors">Burndown Analytics</Link></li>
+              <li><Link to="/signup" className="hover:text-white transition-colors">HMAC Webhooks</Link></li>
+            </ul>
+          </div>
+
+          {/* Resources Links */}
+          <div>
+            <h4 className="font-bold text-white mb-4 uppercase tracking-wider text-[10px]">Resources</h4>
+            <ul className="space-y-2">
+              <li><Link to="/login" className="hover:text-white transition-colors">Documentation</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">API Reference</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">System Status</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">Support Center</Link></li>
+            </ul>
+          </div>
+
+          {/* Legal Links */}
+          <div>
+            <h4 className="font-bold text-white mb-4 uppercase tracking-wider text-[10px]">Legal</h4>
+            <ul className="space-y-2">
+              <li><Link to="/login" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/signup" className="hover:text-white transition-colors">Terms of Service</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">GDPR & Security</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">Cookie Preferences</Link></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/5 pt-8 text-slate-600">
+          <p>&copy; {new Date().getFullYear()} FlowDesk. All rights reserved.</p>
+          <p>Created with clean engineering architectures.</p>
         </div>
       </footer>
     </div>
