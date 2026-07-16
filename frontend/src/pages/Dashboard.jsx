@@ -53,7 +53,7 @@ const Dashboard = () => {
   
   // Create Board Form States
   const [newBoardName, setNewBoardName] = useState('');
-  const [newBoardColor, setNewBoardColor] = useState('#6366F1');
+  const [newBoardColor, setNewBoardColor] = useState('#D97706');
 
   // Quick Card Creator States
   const [selectedBoardId, setSelectedBoardId] = useState('');
@@ -250,7 +250,7 @@ const Dashboard = () => {
   if (wsLoading) {
     return (
       <div className="flex items-center justify-center min-h-[500px]">
-        <Loader2 className="animate-spin text-indigo-500" size={32} />
+        <Loader2 className="animate-spin text-accentColor" size={32} />
       </div>
     );
   }
@@ -259,7 +259,7 @@ const Dashboard = () => {
   if (workspaces.length === 0) {
     return (
       <div className="max-w-2xl mx-auto py-16 text-center">
-        <div className="h-16 w-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mx-auto mb-8 border border-indigo-500/20">
+        <div className="h-16 w-16 rounded-2xl bg-accentColor/10 flex items-center justify-center text-accentColor mx-auto mb-8 border border-accentColor/25">
           <FolderPlus size={32} />
         </div>
         <h1 className="text-3xl font-extrabold mb-4">Create Your First Workspace</h1>
@@ -268,26 +268,31 @@ const Dashboard = () => {
         <form onSubmit={handleCreateWorkspace} className="glass-card p-8 rounded-2xl border border-darkBorder text-left space-y-6">
           <div>
             <label className="text-xs font-semibold text-slate-400 block mb-1.5">Workspace Name</label>
-            <input
-              type="text"
+            <input 
+              type="text" 
               required
+              placeholder="E.g. Engineering Squad, Marketing Ops..." 
               value={newWsName}
               onChange={(e) => setNewWsName(e.target.value)}
-              placeholder="e.g. Engineering Team"
               className="w-full glass-input"
             />
           </div>
           <div>
             <label className="text-xs font-semibold text-slate-400 block mb-1.5">Description (Optional)</label>
-            <textarea
+            <textarea 
+              placeholder="Provide a brief summary of this workspace's purpose..." 
               value={newWsDesc}
               onChange={(e) => setNewWsDesc(e.target.value)}
-              placeholder="What does this workspace do?"
-              className="w-full glass-input h-24"
+              rows="3"
+              className="w-full glass-input resize-none"
             />
           </div>
-          <button type="submit" disabled={wsCreating} className="glass-button-primary w-full py-2.5">
-            {wsCreating ? 'Creating Workspace...' : 'Create Workspace'}
+          <button 
+            type="submit" 
+            disabled={wsCreating || !newWsName.trim()}
+            className="glass-button-primary w-full py-3 text-xs font-bold"
+          >
+            {wsCreating ? 'Generating...' : 'Establish Workspace'}
           </button>
         </form>
       </div>
@@ -308,7 +313,7 @@ const Dashboard = () => {
   const totalHoursLogged = dailyTime.reduce((sum, item) => sum + item.hours, 0);
 
   const topMetrics = [
-    { name: 'Boards', value: boards.length, change: 'Active Projects', icon: Folder, color: 'text-indigo-400' },
+    { name: 'Boards', value: boards.length, change: 'Active Projects', icon: Folder, color: 'text-accentColor' },
     { name: 'Sprint Tasks', value: burndown.totalCards || 0, change: `${burndown.remainingCards || 0} remaining`, icon: Trello, color: 'text-blue-400' },
     { name: 'Hours Tracked', value: `${Math.round(totalHoursLogged * 10) / 10} h`, change: 'Logged past 7d', icon: Clock, color: 'text-emerald-400' },
     { name: 'Weekly Velocity', value: `${burndown.teamVelocity || 0} SP`, change: 'Story pts / week', icon: Zap, color: 'text-violet-400' },
@@ -322,7 +327,7 @@ const Dashboard = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/5 pb-6">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20 uppercase tracking-wider">
+            <span className="text-xs font-bold text-accentColor bg-accentColor/10 px-2 py-0.5 rounded-full border border-accentColor/20 uppercase tracking-wider">
               {myRole}
             </span>
             <span className="text-slate-600 text-xs">•</span>
@@ -365,7 +370,7 @@ const Dashboard = () => {
           {/* Boards List Section */}
           <div className="space-y-4">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Trello size={18} className="text-indigo-400" />
+              <Trello size={18} className="text-accentColor" />
               Active Project Boards
             </h2>
 
@@ -378,7 +383,7 @@ const Dashboard = () => {
                 >
                   <div className="absolute top-0 left-0 w-full h-1" style={{ backgroundColor: b.color }}></div>
                   <div>
-                    <h3 className="font-bold text-white group-hover:text-indigo-400 transition-colors text-sm">{b.name}</h3>
+                    <h3 className="font-bold text-white group-hover:text-accentColor transition-colors text-sm">{b.name}</h3>
                     <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">{b.description || 'Sprint planner board.'}</p>
                   </div>
                   <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
@@ -398,11 +403,11 @@ const Dashboard = () => {
                       placeholder="Board Name..." 
                       value={newBoardName}
                       onChange={(e) => setNewBoardName(e.target.value)}
-                      className="bg-transparent border-b border-white/10 text-xs font-semibold text-white focus:outline-none focus:border-indigo-500 w-full pb-1 placeholder:text-slate-600"
+                      className="bg-transparent border-b border-white/10 text-xs font-semibold text-white focus:outline-none focus:border-accentColor w-full pb-1 placeholder:text-slate-600"
                     />
                     <div className="flex gap-2 items-center">
                       <span className="text-[9px] text-slate-500 uppercase font-semibold">Theme:</span>
-                      {['#6366F1', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b'].map(c => (
+                      {['#D97706', '#3B82F6', '#10B981', '#EF4444', '#EC4899'].map(c => (
                         <button
                           key={c}
                           type="button"
@@ -430,7 +435,7 @@ const Dashboard = () => {
           {myRole !== 'Viewer' && boards.length > 0 && (
             <div className="glass-card p-6 rounded-xl border border-white/5 space-y-4">
               <h2 className="text-sm font-bold text-white flex items-center gap-2 border-b border-white/5 pb-3">
-                <PlusCircle size={15} className="text-indigo-400" />
+                <PlusCircle size={15} className="text-accentColor" />
                 Quick Actions
               </h2>
 
@@ -517,7 +522,7 @@ const Dashboard = () => {
           {/* Activity Feed Section */}
           <div className="glass-card p-6 rounded-xl border border-white/5 space-y-4">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Activity size={18} className="text-indigo-400" />
+              <Activity size={18} className="text-accentColor" />
               Live Workspace Activity Feed
             </h2>
 
@@ -529,14 +534,14 @@ const Dashboard = () => {
                   {serverLogs.map(log => (
                     <div key={log._id} className="flex justify-between items-start gap-3 text-xs border-b border-white/5 pb-2.5">
                       <div className="flex gap-2.5 items-center">
-                        <div className="h-6 w-6 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-300 font-bold uppercase text-[9px] border border-indigo-500/20">
+                        <div className="h-6 w-6 rounded-full bg-accentColor/10 flex items-center justify-center text-accentColor font-bold uppercase text-[9px] border border-accentColor/20">
                           {log.userId?.name ? log.userId.name[0] : 'U'}
                         </div>
                         <div>
                           <p className="text-slate-200">
                             <span className="font-semibold">{log.userId?.name || 'Someone'}</span>
                             {' '}performed action:{' '}
-                            <code className="text-indigo-400 font-mono text-[10px] bg-white/5 px-1 rounded">{log.action}</code>
+                            <code className="text-accentColor font-mono text-[10px] bg-white/5 px-1 rounded">{log.action}</code>
                           </p>
                           <p className="text-[10px] text-slate-500 mt-0.5">
                             {log.details?.title ? `Target card: "${log.details.title}"` : log.details?.message || 'Operation audit logging logged'}
@@ -555,7 +560,7 @@ const Dashboard = () => {
                 {localActivities.map(act => (
                   <div key={act.id} className="flex justify-between items-start gap-3 text-xs border-b border-white/5 pb-2.5">
                     <div className="flex gap-2.5 items-center">
-                      <div className="h-6 w-6 rounded-full bg-violet-500/10 flex items-center justify-center text-violet-300 font-bold uppercase text-[9px] border border-violet-500/20">
+                      <div className="h-6 w-6 rounded-full bg-accentViolet/10 flex items-center justify-center text-accentViolet font-bold uppercase text-[9px] border border-accentViolet/20">
                         {act.user.name[0]}
                       </div>
                       <div>
@@ -582,7 +587,7 @@ const Dashboard = () => {
           {myRole !== 'Viewer' && (
             <div className="glass-card p-6 rounded-xl border border-white/5 space-y-4">
               <h3 className="font-bold text-white flex items-center gap-2 text-sm border-b border-white/5 pb-3">
-                <UserPlus size={16} className="text-indigo-400" />
+                <UserPlus size={16} className="text-accentColor" />
                 Invite Workspace Teammate
               </h3>
               <form onSubmit={handleInvite} className="space-y-3">
@@ -603,9 +608,9 @@ const Dashboard = () => {
                     onChange={(e) => setInviteRole(e.target.value)}
                     className="flex-1 bg-white/5 border border-white/10 rounded-lg py-1.5 px-2 text-xs text-white focus:outline-none"
                   >
-                    <option value="Editor" className="bg-[#12101a]">Editor</option>
-                    <option value="Viewer" className="bg-[#12101a]">Viewer</option>
-                    <option value="Workspace Admin" className="bg-[#12101a]">Workspace Admin</option>
+                    <option value="Editor" className="bg-darkBgSecondary">Editor</option>
+                    <option value="Viewer" className="bg-darkBgSecondary">Viewer</option>
+                    <option value="Workspace Admin" className="bg-darkBgSecondary">Workspace Admin</option>
                   </select>
                   <button 
                     type="submit" 
@@ -622,14 +627,14 @@ const Dashboard = () => {
           {/* Active Members lists */}
           <div className="glass-card p-6 rounded-xl border border-white/5 space-y-4">
             <h3 className="font-bold text-white flex items-center gap-2 text-sm border-b border-white/5 pb-3">
-              <Users size={16} className="text-indigo-400" />
+              <Users size={16} className="text-accentColor" />
               Active Workspace Members ({members.length})
             </h3>
             <div className="space-y-3 max-h-60 overflow-y-auto">
               {members.map(m => (
                 <div key={m.id} className="flex justify-between items-center gap-2">
                   <div className="flex items-center gap-3">
-                    <div className="h-7 w-7 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 font-bold uppercase text-[10px]">
+                    <div className="h-7 w-7 rounded-full bg-accentColor/10 border border-accentColor/20 flex items-center justify-center text-accentColor font-bold uppercase text-[10px]">
                       {m.user?.name ? m.user.name[0] : 'U'}
                     </div>
                     <div className="truncate max-w-[130px]">

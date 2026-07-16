@@ -122,46 +122,46 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-darkBg text-slate-100 relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-darkBg text-slate-200 relative overflow-hidden font-sans">
       {/* Background radial glow accents */}
-      <div className="absolute top-[-25%] left-[-15%] w-[800px] h-[800px] rounded-full bg-indigo-600/5 blur-[140px] pointer-events-none"></div>
-      <div className="absolute bottom-[-15%] right-[-10%] w-[900px] h-[900px] rounded-full bg-violet-600/5 blur-[150px] pointer-events-none"></div>
+      <div className="absolute top-[-25%] left-[-15%] w-[800px] h-[800px] rounded-full bg-accentColor/5 blur-[140px] pointer-events-none"></div>
+      <div className="absolute bottom-[-15%] right-[-10%] w-[900px] h-[900px] rounded-full bg-accentViolet/3 blur-[150px] pointer-events-none"></div>
 
       {/* Top Navbar */}
       <header className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between z-20 relative">
         <div className="flex items-center gap-2">
-          <svg className="h-6 w-6 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg className="h-6 w-6 text-accentColor" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <rect x="3" y="3" width="4" height="18" rx="1" />
             <rect x="10" y="3" width="4" height="12" rx="1" />
             <rect x="17" y="3" width="4" height="15" rx="1" />
           </svg>
-          <span className="font-semibold text-xl tracking-tight text-white">
+          <span className="font-semibold text-lg tracking-tight text-white">
             Flow<span className="text-slate-400 font-light">Desk</span>
           </span>
         </div>
 
         <div className="flex items-center gap-6">
-          <Link to="/login" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">
+          <Link to="/login" className="text-slate-400 hover:text-white transition-colors text-xs font-medium">
             Sign In
           </Link>
-          <Link to="/signup" className="glass-button-primary">
+          <Link to="/signup" className="glass-button-primary px-5 py-2">
             Start Free
-            <ArrowRight size={14} />
+            <ArrowRight size={13} />
           </Link>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 pt-20 pb-16 text-center relative z-10 flex flex-col items-center">
+      <section className="max-w-7xl mx-auto px-6 pt-16 pb-16 text-center relative z-10 flex flex-col items-center">
         {/* Release Pill */}
         <Link to="/signup">
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-indigo-400 font-semibold mb-8 hover:bg-white/10 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] text-accentColor font-bold mb-8 hover:bg-white/10 transition-colors cursor-pointer"
           >
-            <span className="flex items-center gap-1.5"><Sparkles size={11} /> FlowDesk v1.0 is now live</span>
+            <span className="flex items-center gap-1.5"><Sparkles size={11} /> FlowDesk v1.1 is now live</span>
             <ChevronRight size={12} />
           </motion.div>
         </Link>
@@ -171,10 +171,10 @@ const LandingPage = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl md:text-7xl font-bold tracking-tight text-white max-w-4xl leading-[1.1] mb-6"
+          className="text-4xl md:text-7xl font-bold tracking-tight text-white max-w-4xl leading-[1.08] mb-6 font-sans"
         >
-          The collaborative project platform <br className="hidden md:inline" />
-          <span className="text-slate-400 font-light">built for engineering teams.</span>
+          Engineering workspaces, <br className="hidden md:inline" />
+          <span className="text-slate-400 font-light">designed to flow.</span>
         </motion.h1>
 
         {/* Description */}
@@ -182,9 +182,9 @@ const LandingPage = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-base md:text-lg text-slate-400 max-w-2xl mb-12 leading-relaxed font-normal"
+          className="text-sm md:text-base text-slate-400 max-w-2xl mb-12 leading-relaxed font-normal"
         >
-          FlowDesk integrates real-time Kanban boards, precise developer time-tracking, and sprint analytics into a fast, unified command center for technical projects.
+          FlowDesk integrates instant live collaborative boards, precise card-based time tracking, and historic sprint analytics into a keyboard-driven engineering command center.
         </motion.p>
 
         {/* Feature List Row */}
@@ -192,15 +192,15 @@ const LandingPage = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-12 text-xs font-semibold text-slate-500 uppercase tracking-widest"
+          className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-12 text-[10px] font-bold text-slate-500 uppercase tracking-widest"
         >
-          <span className="flex items-center gap-1.5"><Users size={12} className="text-indigo-500" /> Live Collaboration</span>
+          <span className="flex items-center gap-1.5"><Users size={12} className="text-accentColor" /> Live Collaboration</span>
           <span>•</span>
-          <span className="flex items-center gap-1.5"><Clock size={12} className="text-indigo-500" /> Atomic Time Tracking</span>
+          <span className="flex items-center gap-1.5"><Clock size={12} className="text-accentColor" /> Precise Loggers</span>
           <span>•</span>
-          <span className="flex items-center gap-1.5"><TrendingUp size={12} className="text-indigo-500" /> Burn-down Analytics</span>
+          <span className="flex items-center gap-1.5"><TrendingUp size={12} className="text-accentColor" /> Burn-down Analytics</span>
           <span>•</span>
-          <span className="flex items-center gap-1.5"><ShieldCheck size={12} className="text-indigo-500" /> Enterprise Security</span>
+          <span className="flex items-center gap-1.5"><ShieldCheck size={12} className="text-accentColor" /> JWT Security</span>
         </motion.div>
 
         {/* Call to Actions */}
@@ -208,159 +208,176 @@ const LandingPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-24"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
         >
-          <Link to="/signup" className="glass-button-primary text-base px-8 py-4">
-            Start Free Workspace
-            <ArrowRight size={16} />
+          <Link to="/signup" className="glass-button-primary text-xs px-8 py-3.5">
+            Deploy Workspace
+            <ArrowRight size={14} />
           </Link>
-          <Link to="/login" className="glass-button-secondary text-base px-8 py-4">
-            Live Demo
+          <Link to="/login" className="glass-button-secondary text-xs px-8 py-3.5">
+            Interactive Console
           </Link>
         </motion.div>
 
-        {/* Interactive Product Showcase (Kanban Demo) */}
+        {/* Interactive Product Showcase (Kanban Demo) styled as a premium browser window */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="w-full max-w-5xl rounded-2xl border border-white/10 bg-white/[0.01] p-4 shadow-[0_0_50px_rgba(99,102,241,0.08)] backdrop-blur-md relative"
+          className="w-full max-w-5xl rounded-xl border border-white/5 bg-[#0A0B0E] shadow-[0_24px_80px_rgba(0,0,0,0.8),0_0_80px_rgba(217,119,6,0.04)] overflow-hidden relative"
         >
-          {/* Showcase header tools */}
-          <div className="flex justify-between items-center mb-4 px-2">
-            <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-indigo-500/80"></span>
-              <span className="text-xs font-semibold text-slate-400">Interactive Kanban Preview — Click cards to move them between statuses</span>
+          {/* Mock Browser Header Bar */}
+          <div className="bg-[#0E1015] border-b border-white/5 px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-red-500/30 border border-red-500/10"></span>
+              <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/30 border border-yellow-500/10"></span>
+              <span className="h-2.5 w-2.5 rounded-full bg-green-500/30 border border-green-500/10"></span>
+            </div>
+            <div className="bg-white/5 border border-white/5 px-4 py-1 rounded text-[9px] text-slate-500 font-mono w-80 truncate text-center">
+              app.flowdesk.io/workspaces/dev_default/board_active
             </div>
             <button 
               onClick={resetDemoCards}
-              className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-indigo-400 transition-colors bg-white/5 px-2.5 py-1 rounded-md border border-white/5"
+              className="flex items-center gap-1 text-[10px] text-slate-500 hover:text-accentColor transition-colors bg-white/5 px-2.5 py-1 rounded border border-white/5"
             >
               <RotateCcw size={10} />
-              Reset Demo
+              Reset Board
             </button>
           </div>
 
-          {/* Simulated Kanban Columns Grid */}
-          <div className="bg-[#12101a]/40 border border-white/5 rounded-xl p-5 grid grid-cols-1 md:grid-cols-4 gap-4 text-left min-h-[300px]">
-            
-            {/* 1. Backlog Column */}
-            <div className="bg-white/[0.01] border border-white/5 rounded-xl p-3 flex flex-col">
-              <div className="flex items-center justify-between mb-3.5">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Backlog</span>
-                <span className="text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-500">
-                  {demoCards.filter(c => c.col === 'backlog').length}
-                </span>
-              </div>
-              <div className="space-y-2 flex-1">
-                <AnimatePresence>
-                  {demoCards.filter(c => c.col === 'backlog').map(c => (
-                    <motion.div
-                      layout
-                      key={c.id}
-                      onClick={() => moveDemoCard(c.id)}
-                      className="p-3 bg-[#18181B] border border-white/5 rounded-lg shadow-sm hover:border-indigo-500/30 transition-all cursor-pointer relative group"
-                    >
-                      <div className="text-xs font-semibold text-slate-100 mb-2 leading-normal group-hover:text-indigo-300">{c.title}</div>
-                      <div className="flex justify-between items-center text-[9px] text-slate-500">
-                        <span className={`px-1.5 py-0.5 rounded border font-medium ${getColColor(c.priority)}`}>{c.priority}</span>
-                        <span>{c.points} pts</span>
-                      </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </div>
-            </div>
+          <div className="p-6 bg-gradient-to-b from-[#0A0B0E] to-[#0E1015] text-left">
+            {/* Showcase Tip */}
+            <p className="text-[10px] font-semibold text-slate-500 mb-4 bg-white/5 border border-white/5 inline-block px-2.5 py-1 rounded-md">
+              💡 Drag & Drop Simulation: Click on any card to move it across columns.
+            </p>
 
-            {/* 2. In Progress Column */}
-            <div className="bg-white/[0.01] border border-white/5 rounded-xl p-3 flex flex-col">
-              <div className="flex items-center justify-between mb-3.5">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">In Progress</span>
-                <span className="text-[10px] bg-indigo-500/10 px-1.5 py-0.5 rounded text-indigo-400">
-                  {demoCards.filter(c => c.col === 'progress').length}
-                </span>
+            {/* Simulated Kanban Columns Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 min-h-[300px]">
+              
+              {/* 1. Backlog Column */}
+              <div className="bg-[#13151D]/60 border border-white/5 rounded-xl p-3 flex flex-col">
+                <div className="flex items-center justify-between mb-3.5 px-1">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Backlog</span>
+                  <span className="text-[9px] bg-white/5 px-2 py-0.5 rounded text-slate-400 font-mono">
+                    {demoCards.filter(c => c.col === 'backlog').length}
+                  </span>
+                </div>
+                <div className="space-y-2 flex-1">
+                  <AnimatePresence>
+                    {demoCards.filter(c => c.col === 'backlog').map(c => (
+                      <motion.div
+                        layout
+                        key={c.id}
+                        onClick={() => moveDemoCard(c.id)}
+                        className="p-3 bg-[#171922] border border-white/5 rounded-lg shadow-sm hover:border-accentColor/30 transition-all cursor-pointer relative group"
+                      >
+                        <div className="text-[11px] font-semibold text-slate-200 mb-2 leading-normal group-hover:text-accentColor">{c.title}</div>
+                        <div className="flex justify-between items-center text-[9px] text-slate-500">
+                          <span className={`px-1.5 py-0.5 rounded border font-medium ${getColColor(c.priority)}`}>{c.priority}</span>
+                          <span className="flex items-center gap-1.5">
+                            <span className="text-[9px] text-slate-600 font-medium">{c.points} pts</span>
+                            <span className="h-4 w-4 rounded-full bg-accentColor/10 border border-accentColor/20 text-accentColor flex items-center justify-center font-bold text-[8px]">SC</span>
+                          </span>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </div>
               </div>
-              <div className="space-y-2 flex-1">
-                <AnimatePresence>
-                  {demoCards.filter(c => c.col === 'progress').map(c => (
-                    <motion.div
-                      layout
-                      key={c.id}
-                      onClick={() => moveDemoCard(c.id)}
-                      className="p-3 bg-[#18181B] border border-white/5 rounded-lg shadow-sm hover:border-indigo-500/30 transition-all cursor-pointer relative group"
-                    >
-                      <div className="text-xs font-semibold text-slate-100 mb-2 leading-normal group-hover:text-indigo-300">{c.title}</div>
-                      <div className="flex justify-between items-center text-[9px]">
-                        <span className={`px-1.5 py-0.5 rounded border font-medium ${getColColor(c.priority)}`}>{c.priority}</span>
-                        <span className="text-red-400 font-bold flex items-center gap-1 animate-pulse">
-                          <span className="h-1.5 w-1.5 rounded-full bg-red-400"></span>
-                          01:45:22
-                        </span>
-                      </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </div>
-            </div>
 
-            {/* 3. Review Column */}
-            <div className="bg-white/[0.01] border border-white/5 rounded-xl p-3 flex flex-col">
-              <div className="flex items-center justify-between mb-3.5">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Review</span>
-                <span className="text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-500">
-                  {demoCards.filter(c => c.col === 'review').length}
-                </span>
+              {/* 2. In Progress Column */}
+              <div className="bg-[#13151D]/60 border border-white/5 rounded-xl p-3 flex flex-col">
+                <div className="flex items-center justify-between mb-3.5 px-1">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">In Progress</span>
+                  <span className="text-[9px] bg-accentColor/10 px-2 py-0.5 rounded text-accentColor font-mono">
+                    {demoCards.filter(c => c.col === 'progress').length}
+                  </span>
+                </div>
+                <div className="space-y-2 flex-1">
+                  <AnimatePresence>
+                    {demoCards.filter(c => c.col === 'progress').map(c => (
+                      <motion.div
+                        layout
+                        key={c.id}
+                        onClick={() => moveDemoCard(c.id)}
+                        className="p-3 bg-[#171922] border border-white/5 rounded-lg shadow-sm hover:border-accentColor/30 transition-all cursor-pointer relative group"
+                      >
+                        <div className="text-[11px] font-semibold text-slate-200 mb-2 leading-normal group-hover:text-accentColor">{c.title}</div>
+                        <div className="flex justify-between items-center text-[9px]">
+                          <span className={`px-1.5 py-0.5 rounded border font-medium ${getColColor(c.priority)}`}>{c.priority}</span>
+                          <span className="text-red-400 font-bold flex items-center gap-1 animate-pulse">
+                            <span className="h-1.5 w-1.5 rounded-full bg-red-400"></span>
+                            01:45:22
+                          </span>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </div>
               </div>
-              <div className="space-y-2 flex-1">
-                <AnimatePresence>
-                  {demoCards.filter(c => c.col === 'review').map(c => (
-                    <motion.div
-                      layout
-                      key={c.id}
-                      onClick={() => moveDemoCard(c.id)}
-                      className="p-3 bg-[#18181B] border border-white/5 rounded-lg shadow-sm hover:border-indigo-500/30 transition-all cursor-pointer relative group"
-                    >
-                      <div className="text-xs font-semibold text-slate-100 mb-2 leading-normal group-hover:text-indigo-300">{c.title}</div>
-                      <div className="flex justify-between items-center text-[9px] text-slate-500">
-                        <span className={`px-1.5 py-0.5 rounded border font-medium ${getColColor(c.priority)}`}>{c.priority}</span>
-                        <span>{c.points} pts</span>
-                      </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </div>
-            </div>
 
-            {/* 4. Completed Column */}
-            <div className="bg-white/[0.01] border border-white/5 rounded-xl p-3 flex flex-col">
-              <div className="flex items-center justify-between mb-3.5">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Done</span>
-                <span className="text-[10px] bg-emerald-500/10 px-1.5 py-0.5 rounded text-emerald-400 font-bold">
-                  {demoCards.filter(c => c.col === 'done').length}
-                </span>
+              {/* 3. Review Column */}
+              <div className="bg-[#13151D]/60 border border-white/5 rounded-xl p-3 flex flex-col">
+                <div className="flex items-center justify-between mb-3.5 px-1">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Review</span>
+                  <span className="text-[9px] bg-white/5 px-2 py-0.5 rounded text-slate-400 font-mono">
+                    {demoCards.filter(c => c.col === 'review').length}
+                  </span>
+                </div>
+                <div className="space-y-2 flex-1">
+                  <AnimatePresence>
+                    {demoCards.filter(c => c.col === 'review').map(c => (
+                      <motion.div
+                        layout
+                        key={c.id}
+                        onClick={() => moveDemoCard(c.id)}
+                        className="p-3 bg-[#171922] border border-white/5 rounded-lg shadow-sm hover:border-accentColor/30 transition-all cursor-pointer relative group"
+                      >
+                        <div className="text-[11px] font-semibold text-slate-200 mb-2 leading-normal group-hover:text-accentColor">{c.title}</div>
+                        <div className="flex justify-between items-center text-[9px] text-slate-500">
+                          <span className={`px-1.5 py-0.5 rounded border font-medium ${getColColor(c.priority)}`}>{c.priority}</span>
+                          <span className="flex items-center gap-1.5">
+                            <span className="text-[9px] text-slate-600 font-medium">{c.points} pts</span>
+                            <span className="h-4 w-4 rounded-full bg-accentViolet/10 border border-accentViolet/20 text-accentViolet flex items-center justify-center font-bold text-[8px]">MH</span>
+                          </span>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </div>
               </div>
-              <div className="space-y-2 flex-1">
-                <AnimatePresence>
-                  {demoCards.filter(c => c.col === 'done').map(c => (
-                    <motion.div
-                      layout
-                      key={c.id}
-                      onClick={() => moveDemoCard(c.id)}
-                      className="p-3 bg-[#18181B]/80 border border-emerald-500/20 rounded-lg shadow-sm hover:border-indigo-500/30 transition-all cursor-pointer relative group"
-                    >
-                      <div className="text-xs font-semibold text-slate-400 line-through mb-2 leading-normal group-hover:text-indigo-300">{c.title}</div>
-                      <div className="flex justify-between items-center text-[9px]">
-                        <span className="text-emerald-400 font-semibold bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded flex items-center gap-1">
-                          Completed
-                        </span>
-                        <span className="text-slate-600 font-medium">{c.points} pts</span>
-                      </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </div>
-            </div>
 
+              {/* 4. Completed Column */}
+              <div className="bg-[#13151D]/60 border border-white/5 rounded-xl p-3 flex flex-col">
+                <div className="flex items-center justify-between mb-3.5 px-1">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Done</span>
+                  <span className="text-[9px] bg-emerald-500/10 px-2 py-0.5 rounded text-emerald-400 font-mono font-bold">
+                    {demoCards.filter(c => c.col === 'done').length}
+                  </span>
+                </div>
+                <div className="space-y-2 flex-1">
+                  <AnimatePresence>
+                    {demoCards.filter(c => c.col === 'done').map(c => (
+                      <motion.div
+                        layout
+                        key={c.id}
+                        onClick={() => moveDemoCard(c.id)}
+                        className="p-3 bg-[#171922]/80 border border-emerald-500/10 rounded-lg shadow-sm hover:border-accentColor/30 transition-all cursor-pointer relative group"
+                      >
+                        <div className="text-[11px] font-semibold text-slate-500 line-through mb-2 leading-normal group-hover:text-accentColor">{c.title}</div>
+                        <div className="flex justify-between items-center text-[9px]">
+                          <span className="text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded flex items-center gap-1 scale-95">
+                            Completed
+                          </span>
+                          <span className="text-slate-600 font-medium">{c.points} pts</span>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </div>
+
+            </div>
           </div>
         </motion.div>
       </section>
@@ -368,7 +385,7 @@ const LandingPage = () => {
       {/* Interactive Feature Showcase */}
       <section className="max-w-7xl mx-auto px-6 py-24 border-t border-white/5 relative z-10">
         <div className="text-center mb-16">
-          <span className="text-xs font-bold uppercase tracking-widest text-indigo-400">Platform Core</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-accentColor">Platform Core</span>
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Equipped for High-Velocity Teams</h2>
           <p className="text-slate-400 max-w-xl mx-auto">Explore the enterprise architecture built directly into FlowDesk.</p>
         </div>
@@ -385,12 +402,12 @@ const LandingPage = () => {
                   onClick={() => setActiveFeature(feat.id)}
                   className={`text-left p-5 rounded-xl border transition-all duration-200 cursor-pointer flex items-start gap-4 ${
                     isActive
-                      ? 'bg-indigo-600/10 border-indigo-500/30 text-white shadow-lg'
+                      ? 'bg-accentColor/10 border-accentColor/20 text-white shadow-lg'
                       : 'bg-white/[0.01] border-white/5 text-slate-400 hover:bg-white/[0.03] hover:border-white/10 hover:text-slate-200'
                   }`}
                 >
                   <div className={`p-2 rounded-lg border ${
-                    isActive ? 'bg-indigo-500/20 border-indigo-500/30 text-indigo-400' : 'bg-white/5 border-white/5 text-slate-400'
+                    isActive ? 'bg-accentColor/20 border-accentColor/25 text-accentColor' : 'bg-white/5 border-white/5 text-slate-400'
                   }`}>
                     <Icon size={20} />
                   </div>
@@ -399,7 +416,7 @@ const LandingPage = () => {
                       <span className="font-semibold text-sm">{feat.title}</span>
                       {feat.badge && (
                         <span className={`text-[9px] px-2 py-0.5 rounded font-mono ${
-                          isActive ? 'bg-indigo-500/20 text-indigo-300' : 'bg-white/5 text-slate-500'
+                          isActive ? 'bg-accentColor/20 text-accentColor' : 'bg-white/5 text-slate-500'
                         }`}>
                           {feat.badge}
                         </span>
@@ -424,9 +441,9 @@ const LandingPage = () => {
                 className="h-full"
               >
                 {activeFeature === 'sockets' && (
-                  <div className="bg-[#161420]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
+                  <div className="bg-[#13151D]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
                     <div>
-                      <span className="text-[10px] uppercase tracking-wider text-indigo-400 font-semibold mb-3 block font-mono">Socket.IO Event Stream</span>
+                      <span className="text-[10px] uppercase tracking-wider text-accentColor font-semibold mb-3 block font-mono">Socket.IO Event Stream</span>
                       <h4 className="text-lg font-bold text-white mb-4">Active Board Room Updates</h4>
                       <div className="space-y-3">
                         <div className="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-lg">
@@ -438,7 +455,7 @@ const LandingPage = () => {
                         </div>
                         <div className="flex items-center justify-between p-3 bg-white/5 border border-white/5 rounded-lg">
                           <div className="flex items-center gap-2">
-                            <span className="h-2 w-2 rounded-full bg-indigo-500"></span>
+                            <span className="h-2 w-2 rounded-full bg-accentViolet animate-pulse"></span>
                             <span className="text-xs font-medium text-slate-200">Marcus Harris</span>
                           </div>
                           <span className="text-[10px] text-slate-500 font-mono">card_move: card_84 &rarr; Done</span>
@@ -459,9 +476,9 @@ const LandingPage = () => {
                 )}
 
                 {activeFeature === 'tracker' && (
-                  <div className="bg-[#161420]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
+                  <div className="bg-[#13151D]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
                     <div>
-                      <span className="text-[10px] uppercase tracking-wider text-violet-400 font-semibold mb-3 block font-mono">Task Session Timer</span>
+                      <span className="text-[10px] uppercase tracking-wider text-accentViolet font-semibold mb-3 block font-mono">Task Session Timer</span>
                       <h4 className="text-lg font-bold text-white mb-4">Integrated Developer Stopwatch</h4>
                       <div className="bg-black/25 border border-white/5 rounded-xl p-6 text-center max-w-sm mx-auto">
                         <p className="text-[10px] text-slate-500 mb-2 uppercase tracking-widest font-mono">Active Time Logged</p>
@@ -487,14 +504,14 @@ const LandingPage = () => {
                 )}
 
                 {activeFeature === 'analytics' && (
-                  <div className="bg-[#161420]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
+                  <div className="bg-[#13151D]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
                     <div>
-                      <span className="text-[10px] uppercase tracking-wider text-indigo-400 font-semibold mb-3 block font-mono">Burndown Metrics</span>
+                      <span className="text-[10px] uppercase tracking-wider text-accentColor font-semibold mb-3 block font-mono">Burndown Metrics</span>
                       <h4 className="text-lg font-bold text-white mb-4">Sprint Story Points Velocity</h4>
                       <div className="h-32 w-full flex items-end justify-between gap-1 pt-4 px-2 bg-black/25 border border-white/5 rounded-xl">
-                        <svg className="w-full h-full text-indigo-500" viewBox="0 0 100 50" preserveAspectRatio="none">
+                        <svg className="w-full h-full text-accentColor" viewBox="0 0 100 50" preserveAspectRatio="none">
                           <line x1="0" y1="5" x2="100" y2="45" stroke="#475569" strokeWidth="1" strokeDasharray="3,3" />
-                          <path d="M 0 5 L 20 15 L 40 18 L 60 30 L 80 32 L 100 45" fill="none" stroke="#6366f1" strokeWidth="2" />
+                          <path d="M 0 5 L 20 15 L 40 18 L 60 30 L 80 32 L 100 45" fill="none" stroke="#D97706" strokeWidth="2" />
                         </svg>
                       </div>
                       <div className="flex justify-between items-center text-[10px] text-slate-500 mt-2 px-1">
@@ -511,7 +528,7 @@ const LandingPage = () => {
                 )}
 
                 {activeFeature === 'auth' && (
-                  <div className="bg-[#161420]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
+                  <div className="bg-[#13151D]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
                     <div>
                       <span className="text-[10px] uppercase tracking-wider text-emerald-400 font-semibold mb-3 block font-mono">Security Center</span>
                       <h4 className="text-lg font-bold text-white mb-4">Multi-Factor Authentication</h4>
@@ -525,12 +542,12 @@ const LandingPage = () => {
                               value={val} 
                               disabled 
                               className={`w-8 h-10 border rounded-lg text-center font-mono text-sm font-semibold ${
-                                val ? 'border-indigo-500 text-indigo-400 bg-indigo-500/5' : 'border-white/10 bg-white/5 text-slate-500'
+                                val ? 'border-accentColor text-accentColor bg-accentColor/5' : 'border-white/10 bg-white/5 text-slate-500'
                               }`} 
                             />
                           ))}
                         </div>
-                        <button className="w-full py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition-colors cursor-pointer">
+                        <button className="w-full py-1.5 rounded-lg bg-accentColor hover:brightness-105 text-white text-xs font-semibold transition-colors cursor-pointer">
                           Verify Code
                         </button>
                       </div>
@@ -542,7 +559,7 @@ const LandingPage = () => {
                 )}
 
                 {activeFeature === 'webhooks' && (
-                  <div className="bg-[#161420]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
+                  <div className="bg-[#13151D]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
                     <div>
                       <span className="text-[10px] uppercase tracking-wider text-amber-400 font-semibold mb-3 block font-mono">Outgoing Integrations</span>
                       <h4 className="text-lg font-bold text-white mb-4">JSON Webhook Payloads</h4>
@@ -567,9 +584,9 @@ const LandingPage = () => {
                 )}
 
                 {activeFeature === 'audit' && (
-                  <div className="bg-[#161420]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
+                  <div className="bg-[#13151D]/80 border border-white/5 rounded-xl p-6 flex flex-col h-full justify-between shadow-inner">
                     <div>
-                      <span className="text-[10px] uppercase tracking-wider text-indigo-400 font-semibold mb-3 block font-mono">Compliance Trails</span>
+                      <span className="text-[10px] uppercase tracking-wider text-accentColor font-semibold mb-3 block font-mono">Compliance Trails</span>
                       <h4 className="text-lg font-bold text-white mb-4">Immutable Audit Logs</h4>
                       <div className="overflow-hidden border border-white/5 rounded-lg text-left text-xs bg-black/25">
                         <table className="w-full text-[10px] text-slate-400">
@@ -582,12 +599,12 @@ const LandingPage = () => {
                           </thead>
                           <tbody>
                             <tr className="border-b border-white/5">
-                              <td className="p-2 font-mono text-indigo-400">workspace.delete_request</td>
+                              <td className="p-2 font-mono text-accentColor">workspace.delete_request</td>
                               <td className="p-2">Sarah C.</td>
                               <td className="p-2">192.168.1.42</td>
                             </tr>
                             <tr className="border-b border-white/5">
-                              <td className="p-2 font-mono text-violet-400">mfa.enabled</td>
+                              <td className="p-2 font-mono text-accentViolet">mfa.enabled</td>
                               <td className="p-2">Marcus H.</td>
                               <td className="p-2">203.0.113.12</td>
                             </tr>
@@ -624,7 +641,7 @@ const LandingPage = () => {
               "The command palette and atomic time tracking completely transformed our sprint reviews. We tracked 150 hours in the first week without a single hitch."
             </p>
             <div className="flex items-center gap-3">
-              <div className="h-9 w-9 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-300 font-bold text-xs uppercase">
+              <div className="h-9 w-9 rounded-full bg-accentColor/10 border border-accentColor/25 flex items-center justify-center text-accentColor font-bold text-xs uppercase">
                 SC
               </div>
               <div>
@@ -639,7 +656,7 @@ const LandingPage = () => {
               "We migrated from Jira in less than an hour. The dark-first design is extremely elegant, and the Socket.IO real-time sync is incredibly fast."
             </p>
             <div className="flex items-center gap-3">
-              <div className="h-9 w-9 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-300 font-bold text-xs uppercase">
+              <div className="h-9 w-9 rounded-full bg-accentViolet/10 border border-accentViolet/25 flex items-center justify-center text-accentViolet font-bold text-xs uppercase">
                 MH
               </div>
               <div>
@@ -693,18 +710,18 @@ const LandingPage = () => {
           </div>
 
           {/* Pro Plan */}
-          <div className="glass-card p-8 rounded-2xl border-2 border-indigo-500 relative flex flex-col justify-between shadow-lg shadow-indigo-500/10">
-            <div className="absolute top-4 right-4 bg-indigo-500 text-white font-bold text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider">
+          <div className="glass-card p-8 rounded-2xl border border-accentColor relative flex flex-col justify-between shadow-lg shadow-accentColor/5">
+            <div className="absolute top-4 right-4 bg-accentColor text-white font-bold text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider">
               Popular
             </div>
             <div>
               <h3 className="text-lg font-bold text-white mb-2">Pro SaaS</h3>
-              <p className="text-xs text-indigo-400 mb-6">For fast-growing development teams.</p>
+              <p className="text-xs text-accentColor mb-6">For fast-growing development teams.</p>
               <div className="text-4xl font-extrabold text-white mb-6">
                 $12 <span className="text-xs text-slate-500 font-normal">/ user / mo</span>
               </div>
               <ul className="space-y-3 text-xs text-slate-300 mb-8">
-                <li className="flex items-center gap-2 text-indigo-300">✓ Unlimited Workspaces & Boards</li>
+                <li className="flex items-center gap-2 text-accentColor">✓ Unlimited Workspaces & Boards</li>
                 <li className="flex items-center gap-2">✓ Live Sockets Collaboration</li>
                 <li className="flex items-center gap-2">✓ Integrated Card Time Tracker</li>
                 <li className="flex items-center gap-2">✓ Recharts Burn-down Metrics</li>
@@ -743,7 +760,7 @@ const LandingPage = () => {
           {/* Brand Column */}
           <div className="col-span-2 flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <svg className="h-5 w-5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="h-5 w-5 text-accentColor" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="3" width="4" height="18" rx="1" />
                 <rect x="10" y="3" width="4" height="12" rx="1" />
                 <rect x="17" y="3" width="4" height="15" rx="1" />

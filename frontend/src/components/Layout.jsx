@@ -203,7 +203,7 @@ const Layout = ({ children }) => {
     <div className="flex flex-col h-full py-6 px-4">
       {/* Logo */}
       <div className="flex items-center gap-2 px-2 mb-8">
-        <svg className="h-5 w-5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <svg className="h-5 w-5 text-accentColor" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <rect x="3" y="3" width="4" height="18" rx="1" />
           <rect x="10" y="3" width="4" height="12" rx="1" />
           <rect x="17" y="3" width="4" height="15" rx="1" />
@@ -220,10 +220,10 @@ const Layout = ({ children }) => {
           <select 
             value={activeWorkspace?._id || ''}
             onChange={handleWorkspaceChange}
-            className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-sm text-white focus:outline-none focus:border-indigo-500 cursor-pointer"
+            className="w-full bg-white/5 border border-white/5 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-accentColor cursor-pointer"
           >
             {workspaces.map(ws => (
-              <option key={ws._id} value={ws._id} className="bg-[#12101a]">{ws.name}</option>
+              <option key={ws._id} value={ws._id} className="bg-darkBgSecondary">{ws.name}</option>
             ))}
           </select>
         </div>
@@ -238,13 +238,13 @@ const Layout = ({ children }) => {
             <Link
               key={item.name}
               to={item.path}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs transition-all duration-200 ${
                 isActive 
-                  ? 'bg-indigo-600/15 text-indigo-400 border-l-2 border-indigo-500' 
+                  ? 'bg-accentColor/10 text-accentColor border-l-2 border-accentColor' 
                   : 'text-slate-400 hover:bg-white/5 hover:text-white'
               }`}
             >
-              <Icon size={18} />
+              <Icon size={16} />
               <span>{item.name}</span>
             </Link>
           );
@@ -267,13 +267,13 @@ const Layout = ({ children }) => {
                 <Link
                   key={b._id}
                   to={`/workspaces/${activeWorkspace._id}/boards/${b._id}`}
-                  className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs transition-all duration-200 ${
                     isActive 
-                      ? 'bg-violet-600/15 text-violet-400 border-l-2 border-violet-500' 
+                      ? 'bg-accentViolet/10 text-accentViolet border-l-2 border-accentViolet' 
                       : 'text-slate-400 hover:bg-white/5 hover:text-white'
                   }`}
                 >
-                  <Trello size={15} style={{ color: b.color }} />
+                  <Trello size={14} style={{ color: b.color }} />
                   <span className="truncate">{b.name}</span>
                 </Link>
               );
@@ -289,7 +289,7 @@ const Layout = ({ children }) => {
       <div className="border-t border-white/5 pt-4 mt-auto">
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 font-bold uppercase text-xs">
+            <div className="h-8 w-8 rounded-full bg-accentColor/10 border border-accentColor/25 flex items-center justify-center text-accentColor font-bold uppercase text-xs">
               {user?.name ? user.name[0] : 'U'}
             </div>
             <div className="max-w-[120px]">
@@ -318,8 +318,8 @@ const Layout = ({ children }) => {
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-50 flex md:hidden bg-black/60 backdrop-blur-sm">
-          <div className="relative w-64 bg-[#0e0c14] h-full shadow-2xl">
+        <div className="fixed inset-0 z-50 flex md:hidden bg-black/80 backdrop-blur-sm">
+          <div className="relative w-64 bg-darkBgSecondary h-full shadow-2xl border-r border-white/5">
             <button 
               onClick={() => setMobileOpen(false)}
               className="absolute top-4 right-4 p-1 rounded-lg bg-white/5 text-slate-400 hover:text-white"
@@ -365,14 +365,14 @@ const Layout = ({ children }) => {
             {/* Notification Trigger Mock */}
             <button className="p-2 rounded-lg hover:bg-white/5 text-slate-400 hover:text-white relative">
               <Bell size={18} />
-              <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 bg-indigo-500 rounded-full"></span>
+              <span className="absolute top-1.5 right-1.5 h-1.5 w-1.5 bg-accentColor rounded-full"></span>
             </button>
 
             {/* Profile Avatar Dropdown */}
             <div className="relative">
               <button 
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                className="h-8 w-8 rounded-full bg-gradient-to-tr from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-xs uppercase cursor-pointer border border-white/10"
+                className="h-8 w-8 rounded-full bg-gradient-to-tr from-accentColor to-accentViolet flex items-center justify-center text-white font-bold text-xs uppercase cursor-pointer border border-white/10"
               >
                 {user?.name ? user.name[0] : 'U'}
               </button>
@@ -418,16 +418,16 @@ const Layout = ({ children }) => {
       {/* Command Palette Overlay */}
       <AnimatePresence>
         {isCommandPaletteOpen && (
-          <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] px-4 bg-black/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] px-4 bg-black/80 backdrop-blur-sm">
             <motion.div 
               initial={{ opacity: 0, scale: 0.97, y: -8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.97, y: -8 }}
               transition={{ duration: 0.15 }}
-              className="w-full max-w-lg glass-card rounded-xl border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[50vh]"
+              className="w-full max-w-lg glass-card rounded-xl border border-white/5 shadow-2xl overflow-hidden flex flex-col max-h-[50vh]"
             >
               {/* Search Input */}
-              <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/5 bg-[#12101a]/30">
+              <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/5 bg-darkBgSecondary/50">
                 <Search className="text-slate-500 shrink-0" size={18} />
                 <input 
                   type="text"
@@ -453,7 +453,7 @@ const Layout = ({ children }) => {
                           setIsCommandPaletteOpen(false);
                           setCommandSearch('');
                         }}
-                        className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-slate-300 hover:bg-indigo-600/20 hover:text-white transition-colors text-left"
+                        className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-slate-300 hover:bg-accentColor/10 hover:text-white transition-colors text-left"
                       >
                         <div className="flex items-center gap-3 text-xs">
                           <CmdIcon size={14} style={{ color: cmd.color }} className={!cmd.color ? 'text-slate-400' : ''} />
@@ -469,7 +469,7 @@ const Layout = ({ children }) => {
               </div>
 
               {/* Footer Tip */}
-              <div className="px-4 py-2 border-t border-white/5 bg-[#12101a]/10 flex justify-between text-[9px] text-slate-500">
+              <div className="px-4 py-2 border-t border-white/5 bg-darkBg/30 flex justify-between text-[9px] text-slate-500">
                 <span>Tip: Press <kbd className="px-1 py-0.5 rounded bg-white/5 border border-white/10 font-mono text-slate-400 select-none">C</kbd> to quick-create card, <kbd className="px-1 py-0.5 rounded bg-white/5 border border-white/10 font-mono text-slate-400 select-none">B</kbd> to create board</span>
                 <span>Press <kbd className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 font-mono text-slate-400 select-none">/</kbd> to search</span>
               </div>
@@ -483,16 +483,16 @@ const Layout = ({ children }) => {
       {/* Quick Board Creator Modal */}
       <AnimatePresence>
         {isQuickBoardOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="w-full max-w-md glass-card rounded-xl border border-white/10 shadow-2xl p-6 space-y-6"
+              className="w-full max-w-md glass-card rounded-xl border border-white/5 shadow-2xl p-6 space-y-6"
             >
               <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="font-bold text-sm text-white flex items-center gap-2">
-                  <Trello size={16} className="text-indigo-400" />
+                  <Trello size={16} className="text-accentColor" />
                   Quick Create Board
                 </h3>
                 <button onClick={() => setIsQuickBoardOpen(false)} className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/5">
@@ -517,7 +517,7 @@ const Layout = ({ children }) => {
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-bold text-slate-400 uppercase block">Accent Theme</label>
                   <div className="flex gap-3 items-center">
-                    {['#6366F1', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b'].map(c => (
+                    {['#D97706', '#3B82F6', '#10B981', '#EF4444', '#EC4899'].map(c => (
                       <button
                         key={c}
                         type="button"
@@ -557,16 +557,16 @@ const Layout = ({ children }) => {
       {/* Quick Task Creator Modal */}
       <AnimatePresence>
         {isQuickCardOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="w-full max-w-md glass-card rounded-xl border border-white/10 shadow-2xl p-6 space-y-6"
+              className="w-full max-w-md glass-card rounded-xl border border-white/5 shadow-2xl p-6 space-y-6"
             >
               <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h3 className="font-bold text-sm text-white flex items-center gap-2">
-                  <PlusCircle size={16} className="text-indigo-400" />
+                  <PlusCircle size={16} className="text-accentColor" />
                   Quick Create Task
                 </h3>
                 <button onClick={() => setIsQuickCardOpen(false)} className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/5">
@@ -586,10 +586,10 @@ const Layout = ({ children }) => {
                       <select
                         value={selectedQuickBoardId}
                         onChange={(e) => setSelectedQuickBoardId(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-indigo-500"
+                        className="w-full bg-white/5 border border-white/5 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-accentColor"
                       >
                         {boards.map(b => (
-                          <option key={b._id} value={b._id} className="bg-[#12101a]">{b.name}</option>
+                          <option key={b._id} value={b._id} className="bg-darkBgSecondary">{b.name}</option>
                         ))}
                       </select>
                     </div>
@@ -599,14 +599,14 @@ const Layout = ({ children }) => {
                       <select
                         value={selectedQuickColId}
                         onChange={(e) => setSelectedQuickColId(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-indigo-500"
+                        className="w-full bg-white/5 border border-white/5 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-accentColor"
                         disabled={quickBoardColumns.length === 0}
                       >
                         {quickBoardColumns.map(col => (
-                          <option key={col._id} value={col._id} className="bg-[#12101a]">{col.name}</option>
+                          <option key={col._id} value={col._id} className="bg-darkBgSecondary">{col.name}</option>
                         ))}
                         {quickBoardColumns.length === 0 && (
-                          <option className="bg-[#12101a]">No Columns</option>
+                          <option className="bg-darkBgSecondary">No Columns</option>
                         )}
                       </select>
                     </div>
@@ -631,10 +631,10 @@ const Layout = ({ children }) => {
                       <select
                         value={quickCardPoints}
                         onChange={(e) => setQuickCardPoints(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-indigo-500"
+                        className="w-full bg-white/5 border border-white/5 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-accentColor"
                       >
                         {[1, 2, 3, 5, 8, 13].map(pt => (
-                          <option key={pt} value={pt} className="bg-[#12101a]">{pt} pts</option>
+                          <option key={pt} value={pt} className="bg-darkBgSecondary">{pt} pts</option>
                         ))}
                       </select>
                     </div>
@@ -644,11 +644,11 @@ const Layout = ({ children }) => {
                       <select
                         value={quickCardPriority}
                         onChange={(e) => setQuickCardPriority(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-indigo-500"
+                        className="w-full bg-white/5 border border-white/5 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-accentColor"
                       >
-                        <option value="Low" className="bg-[#12101a]">Low</option>
-                        <option value="Medium" className="bg-[#12101a]">Medium</option>
-                        <option value="High" className="bg-[#12101a]">High</option>
+                        <option value="Low" className="bg-darkBgSecondary">Low</option>
+                        <option value="Medium" className="bg-darkBgSecondary">Medium</option>
+                        <option value="High" className="bg-darkBgSecondary">High</option>
                       </select>
                     </div>
                   </div>

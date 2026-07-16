@@ -306,7 +306,7 @@ const BoardView = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[500px]">
-        <Loader2 className="animate-spin text-indigo-500" size={32} />
+        <Loader2 className="animate-spin text-accentColor" size={32} />
       </div>
     );
   }
@@ -315,7 +315,7 @@ const BoardView = () => {
     return (
       <div className="text-center py-20">
         <h2 className="text-2xl font-bold text-red-400">Board not found</h2>
-        <Link to={`/workspaces/${workspaceId}/dashboard`} className="text-indigo-400 hover:underline mt-4 inline-block">
+        <Link to={`/workspaces/${workspaceId}/dashboard`} className="text-accentColor hover:underline mt-4 inline-block">
           Return to Dashboard
         </Link>
       </div>
@@ -345,7 +345,7 @@ const BoardView = () => {
                   <div
                     key={m.socketId}
                     title={`${m.name} is viewing this board`}
-                    className="h-5 w-5 rounded-full bg-gradient-to-tr from-indigo-500 to-violet-600 border border-[#09090B] flex items-center justify-center text-[8px] font-black uppercase text-white shadow-sm"
+                    className="h-5 w-5 rounded-full bg-gradient-to-tr from-accentColor to-accentViolet border border-[#09090B] flex items-center justify-center text-[8px] font-black uppercase text-white shadow-sm"
                   >
                     {m.name[0]}
                   </div>
@@ -374,16 +374,16 @@ const BoardView = () => {
               onChange={(e) => setPriorityFilter(e.target.value)}
               className="bg-white/5 border border-white/10 rounded-lg py-1.5 px-3 text-xs text-white focus:outline-none"
             >
-              <option value="All" className="bg-[#12101a]">All Priorities</option>
-              <option value="Low" className="bg-[#12101a]">Low</option>
-              <option value="Medium" className="bg-[#12101a]">Medium</option>
-              <option value="High" className="bg-[#12101a]">High</option>
+              <option value="All" className="bg-darkBgSecondary">All Priorities</option>
+              <option value="Low" className="bg-darkBgSecondary">Low</option>
+              <option value="Medium" className="bg-darkBgSecondary">Medium</option>
+              <option value="High" className="bg-darkBgSecondary">High</option>
             </select>
           </div>
 
           <button
             onClick={handleGenerateSprintPlan}
-            className="flex items-center gap-1.5 text-xs bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/20 rounded-lg py-1.5 px-3 font-bold transition-all cursor-pointer shrink-0"
+            className="flex items-center gap-1.5 text-xs bg-accentColor/10 hover:bg-accentColor/20 text-accentColor border border-accentColor/20 rounded-lg py-1.5 px-3 font-bold transition-all cursor-pointer shrink-0"
           >
             <Sparkles size={13} />
             AI Plan Sprint
@@ -484,14 +484,14 @@ const BoardView = () => {
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                               onClick={() => setActiveCardId(card._id)}
-                              className={`p-3.5 rounded-lg border bg-[#12101a]/70 hover:bg-[#12101a] transition-all cursor-pointer select-none space-y-3 ${
+                              className={`p-3.5 rounded-lg border bg-darkBgSecondary/70 hover:bg-darkBgSecondary transition-all cursor-pointer select-none space-y-3 ${
                                 snapshot.isDragging 
-                                  ? 'border-indigo-500 shadow-2xl rotate-1 scale-102 bg-[#12101a]' 
+                                  ? 'border-accentColor shadow-2xl rotate-1 scale-102 bg-darkBgSecondary' 
                                   : 'border-white/5'
                               }`}
                             >
                               {/* Title */}
-                              <h4 className="text-xs font-semibold leading-normal text-white group-hover:text-indigo-400">{card.title}</h4>
+                              <h4 className="text-xs font-semibold leading-normal text-white group-hover:text-accentColor">{card.title}</h4>
 
                               {/* Badges bar */}
                               <div className="flex flex-wrap gap-2 items-center text-[9px] text-slate-500 font-medium">
@@ -569,10 +569,10 @@ const BoardView = () => {
       {/* AI Sprint Planner Modal */}
       {isSprintModalOpen && (
         <div className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="w-full max-w-2xl glass-card rounded-2xl border border-white/10 flex flex-col max-h-[80vh] shadow-2xl p-6 relative">
+          <div className="w-full max-w-2xl glass-card rounded-2xl border border-white/5 flex flex-col max-h-[80vh] shadow-2xl p-6 relative">
             <div className="flex justify-between items-center border-b border-white/5 pb-4 mb-4">
               <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                <Sparkles size={18} className="text-indigo-400" />
+                <Sparkles size={18} className="text-accentColor" />
                 FlowDesk AI Sprint Planner
               </h2>
               <button 
@@ -586,7 +586,7 @@ const BoardView = () => {
             <div className="flex-1 overflow-y-auto pr-1 text-slate-300 text-xs leading-relaxed space-y-4">
               {isPlanning ? (
                 <div className="flex flex-col items-center justify-center py-20 gap-3">
-                  <Loader2 className="animate-spin text-indigo-500" size={32} />
+                  <Loader2 className="animate-spin text-accentColor" size={32} />
                   <span className="text-slate-500 font-semibold italic">Gemini AI is analyzing sprint backlogs...</span>
                 </div>
               ) : (
@@ -623,10 +623,10 @@ const BoardView = () => {
             className="absolute pointer-events-none z-50 transition-all duration-75 ease-out"
             style={{ left: `${pixelX}px`, top: `${pixelY}px` }}
           >
-            <svg className="h-4 w-4 text-indigo-500 fill-current drop-shadow-md" viewBox="0 0 24 24">
+            <svg className="h-4 w-4 text-accentColor fill-current drop-shadow-md" viewBox="0 0 24 24">
               <path d="M4.5 3V17.5L9.2 13L13.8 21.5L16.8 19.8L12.2 11.5L18.5 11.5L4.5 3Z" />
             </svg>
-            <span className="absolute left-3 top-3 px-1.5 py-0.5 bg-indigo-600/90 text-[8px] font-bold text-white rounded border border-indigo-400/30 whitespace-nowrap shadow-md">
+            <span className="absolute left-3 top-3 px-1.5 py-0.5 bg-accentColor/90 text-[8px] font-bold text-white rounded border border-accentColor/30 whitespace-nowrap shadow-md">
               {peer.name}
             </span>
           </div>

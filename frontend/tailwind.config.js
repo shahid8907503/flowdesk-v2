@@ -8,20 +8,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        darkBg: '#09090B',
-        darkBgSecondary: '#111827',
-        darkCard: '#18181B',
-        darkBorder: 'rgba(255, 255, 255, 0.08)',
-        accentColor: '#6366F1',
-        accentViolet: '#8b5cf6',
-        textMuted: '#94a3b8',
-        successColor: '#22C55E',
+        darkBg: '#07080B',
+        darkBgSecondary: '#0E1015',
+        darkCard: '#13151D',
+        darkBorder: 'rgba(255, 255, 255, 0.05)',
+        accentColor: '#D97706',
+        accentViolet: '#3B82F6',
+        textMuted: '#8F9CAE',
+        successColor: '#10B981',
         warningColor: '#F59E0B',
         dangerColor: '#EF4444',
         infoColor: '#3B82F6'
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Outfit', 'Inter', 'sans-serif'],
       },
       backdropBlur: {
         xs: '2px',
