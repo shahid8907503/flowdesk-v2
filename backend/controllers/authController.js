@@ -11,6 +11,7 @@ const { logAction } = require('../services/auditService');
 const { signupSchema, loginSchema, verifyOtpSchema } = require('../utils/validators');
 const logger = require('../config/logger');
 const admin = require('../config/firebase');
+const { getAuth } = require('firebase-admin/auth');
 
 const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || 'access_secret_123';
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'refresh_secret_123';
@@ -529,7 +530,7 @@ const googleLogin = async (req, res, next) => {
       return res.status(500).json({ success: false, message: 'Google Authentication is currently unavailable' });
     }
 
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const decodedToken = await getAuth().verifyIdToken(idToken);
     const { email, name, picture } = decodedToken;
 
     // 2. Find user in MongoDB, create one if they don't exist
