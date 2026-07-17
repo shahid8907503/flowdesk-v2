@@ -24,6 +24,9 @@ const aiRoutes = require('./routes/aiRoutes');
 
 const app = express();
 
+// Trust reverse proxy (Render/Vercel)
+app.set('trust proxy', 1);
+
 // Security and utility middlewares
 app.use(helmet());
 // Configure CORS allowed origins

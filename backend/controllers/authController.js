@@ -581,8 +581,12 @@ const googleLogin = async (req, res, next) => {
       }
     });
   } catch (error) {
-    logger.error('Error in googleLogin controller:', error);
-    res.status(401).json({ success: false, message: 'Invalid or expired Google Authentication token' });
+    logger.error(error, 'Error in googleLogin controller:');
+    res.status(401).json({ 
+      success: false, 
+      message: 'Invalid or expired Google Authentication token', 
+      details: error.message 
+    });
   }
 };
 
