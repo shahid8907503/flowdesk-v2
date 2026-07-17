@@ -9,6 +9,13 @@ export const authApi = apiSlice.injectEndpoints({
         body: credentials,
       }),
     }),
+    googleLogin: builder.mutation({
+      query: (idToken) => ({
+        url: '/auth/google-login',
+        method: 'POST',
+        body: { idToken },
+      }),
+    }),
     verify2fa: builder.mutation({
       query: (data) => ({
         url: '/auth/verify-2fa',
@@ -74,6 +81,7 @@ export const authApi = apiSlice.injectEndpoints({
 
 export const {
   useLoginMutation,
+  useGoogleLoginMutation,
   useVerify2faMutation,
   useSignupMutation,
   useLazyVerifyEmailQuery,

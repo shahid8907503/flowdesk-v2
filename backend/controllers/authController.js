@@ -10,6 +10,7 @@ const { sendEmail } = require('../config/mailer');
 const { logAction } = require('../services/auditService');
 const { signupSchema, loginSchema, verifyOtpSchema } = require('../utils/validators');
 const logger = require('../config/logger');
+const admin = require('../config/firebase');
 
 const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || 'access_secret_123';
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'refresh_secret_123';
@@ -514,9 +515,81 @@ const revokeSession = async (req, res, next) => {
   }
 };
 
+const googleLogin = async (req, res, next) => {
+  try {
+    const { idToken } = req.body;
+
+    if (!idToken) {
+      return res.status(400).json({ success: false, message: 'Google Authentication token is required' });
+    }
+
+    // 1. Verify token with Firebase Authentication
+    if (!admin || !admin.apps.length) {
+      logger.error('Firebase Admin SDK is not initialized. Google Sign-In failed.');
+      return res.status(500).json({ success: false, message: 'Google Authentication is currently unavailable' });
+    }
+
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const { email, name, picture } = decodedToken;
+
+    // 2. Find user in MongoDB, create one if they don't exist
+    let user = await User.findOne({ email });
+    if (!user) {
+      const randomPassword = crypto.randomBytes(32).toString('hex');
+      user = await User.create({
+        name: name || email.split('@')[0],
+        email,
+        password: randomPassword,
+        avatar: picture || '',
+        isVerified: true
+      });
+    } else {
+      // Update avatar if changed
+      if (picture && user.avatar !== picture) {
+        user.avatar = picture;
+        await user.save();
+      }
+    }
+
+    // 3. Generate tokens
+    const { accessToken, refreshToken } = await generateTokens(user._id);
+
+    // 4. Set HTTP-Only Cookie
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    });
+
+    // 5. Record device session
+    await recordDeviceSession(user._id, refreshToken, req);
+
+    // 6. Audit logging
+    await logAction(user._id, 'auth.google_login', req);
+
+    // 7. Return success
+    res.status(200).json({
+      success: true,
+      accessToken,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+        isTwoFactorEnabled: user.isTwoFactorEnabled
+      }
+    });
+  } catch (error) {
+    logger.error('Error in googleLogin controller:', error);
+    res.status(401).json({ success: false, message: 'Invalid or expired Google Authentication token' });
+  }
+};
+
 module.exports = {
   signup,
   login,
+  googleLogin,
   verify2fa,
   verifyEmail,
   forgotPassword,

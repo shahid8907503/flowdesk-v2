@@ -1,5 +1,6 @@
 const http = require('http');
 require('dotenv').config();
+require('./config/firebase'); // Initialise Firebase Admin SDK
 
 const app = require('./app');
 const connectDB = require('./config/db');
