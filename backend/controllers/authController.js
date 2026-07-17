@@ -524,7 +524,7 @@ const googleLogin = async (req, res, next) => {
     }
 
     // 1. Verify token with Firebase Authentication
-    if (!admin || !admin.apps.length) {
+    if (!admin || !admin.getApps().length) {
       logger.error('Firebase Admin SDK is not initialized. Google Sign-In failed.');
       return res.status(500).json({ success: false, message: 'Google Authentication is currently unavailable' });
     }

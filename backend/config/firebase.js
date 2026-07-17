@@ -28,7 +28,7 @@ try {
 
   if (serviceAccount) {
     admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount)
+      credential: admin.cert(serviceAccount)
     });
   } else {
     logger.warn("Firebase Admin SDK was NOT initialized: FIREBASE_SERVICE_ACCOUNT env variable or local config file is missing.");
